@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {List, ListItem} from 'material-ui/List';
 import ForTable from 'material-ui/svg-icons/av/music-video';
 import ForKit from 'material-ui/svg-icons/communication/import-contacts';
-import Fordessertkit from 'material-ui/svg-icons/action/delete';
+import Fordessertkit from 'material-ui/svg-icons/social/people';
 import ForCashier from 'material-ui/svg-icons/editor/attach-money';
 import AddMenu from 'material-ui/svg-icons/content/add-circle-outline';
 import Chart from 'material-ui/svg-icons/editor/insert-chart';

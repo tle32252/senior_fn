@@ -67,7 +67,6 @@ class MainStudent extends Component {
             amount: 10000,
             image: 'https://i.imgur.com/FjBMpPM.jpg',
             onCreateTokenSuccess: (x) => {
-                // console.log('hello',x)
                 this.setState({token: x})
                 this.onSubmit();
             },
@@ -174,8 +173,6 @@ class MainStudent extends Component {
                 else if (response.data === "BAD"){
                     this.handleOpen_2() ;
                 }
-                // this.setState({open: false});
-                // this.props.history.push('/admin_edit_exercise')
             })
             .catch((error) => {
                 console.log(error)

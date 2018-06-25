@@ -25,6 +25,8 @@ import StudentDoExercise from "./StudentDoExercise"
 import AdminListOfStudent from "./AdminListOfStudent"
 import AdminListOfExercise from "./AdminListOfExercise"
 import EditExercise from "./EditExercise"
+import VideoStudent from "./VideoStudent"
+import HLSPage from "./HLSPage"
 
 // import checkout from "./checkout.php";
 
@@ -48,6 +50,9 @@ function Path(){
                         <Route path="/admin_list_of_students" exact component={AdminListOfStudent} />
                         <Route path="/admin_list_of_exercise" exact component={AdminListOfExercise} />
                         <Route path="/admin_edit_exercise" exact component={EditExercise} />
+                        <Route path="/video_student" exact component={VideoStudent} />
+                        <Route path="/hls_page" exact component={HLSPage} />
+
 
                     </div>
                 </Router>

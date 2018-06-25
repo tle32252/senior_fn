@@ -1,0 +1,102 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+.logos {
+    width: 100%;
+    padding-top: 20px;
+    text-align: center;
+}
+.logo {
+    display: inline-block;
+    margin: 0 20px;
+    cursor: pointer;
+}
+.title {
+    text-align: center;
+}
+.player {
+    width: 80%;
+    height: 80%;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.player .glyphicon-refresh {
+    font-size: 30px;
+    animation: spin .8s infinite linear;
+}
+
+/* styles for rc-slider */
+.rc-slider-rail {
+    background: rgba(51, 51, 51, 0.9);
+}
+.player_1 .rc-slider-handle,
+.player_1 .rc-slider-handle:hover {
+    border: 2px solid #F86749;
+}
+.player_1 .rc-slider-track {
+    background-color: #F86749;
+}
+
+.player_2 .rc-slider-handle,
+.player_2 .rc-slider-handle:hover {
+    border: 2px solid #8478ff;
+}
+.player_2 .rc-slider-track {
+    background-color: #8478ff;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+/* Styles for new player */
+.video-react,
+.video-react-menu .video-react-menu-content {
+    font-family: 'Arial', sans-serif;
+}
+/* Big button */
+.video-react .video-react-big-play-button {
+    width: 2em;
+    height: 2em;
+    line-height: 1.8em;
+    border-radius: 2em;
+}
+.video-react .video-react-big-play-button,
+.video-react:hover .video-react-big-play-button,
+.video-react .video-react-big-play-button:hover {
+    background-color: #f86749;
+}
+.video-react .video-react-big-play-button.video-react-big-play-button-center {
+    margin-top: -1em;
+    margin-left: -1em;
+}
+/* Volume */
+.video-react .video-react-volume-level {
+    background-color: #f86749
+}
+/* Progress */
+.video-react .video-react-play-progress {
+    background-color: #f86749
+}
+/* Popup menu (playback rate) */
+.video-react .video-react-menu-content {
+    max-height: 20em !important;
+}
+.video-react .video-react-menu-quality li {
+    text-transform: uppercase;
+}
+/* Slider */
+.video-react .video-react-control:focus:before,
+.video-react .video-react-control:hover:before,
+.video-react .video-react-slider:focus {
+    text-shadow: none;
+    box-shadow: none;
+}
+/* Quality label */
+.video-react-active-track-label {
+    line-height: 3em;
+    text-align: center;
+    text-transform: uppercase;
+}

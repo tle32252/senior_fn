@@ -4,6 +4,10 @@ import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import Foredit from 'material-ui/svg-icons/image/edit';
+import Foradd from 'material-ui/svg-icons/content/add-circle-outline';
+
+import Fordessertkit from 'material-ui/svg-icons/action/delete';
 
 
 
@@ -32,7 +36,7 @@ import {
 } from 'material-ui/Table';
 
 
-function Bar({onClick}) {
+function Bar({onClick, handleOpen_3}) {
     return(
         <AppBar
             title={` ${String(localStorage.getItem("ChooseEdit"))} `}
@@ -40,6 +44,12 @@ function Bar({onClick}) {
                 <IconButton onClick={onClick}>
                     <BackIcon/>
                 </IconButton>}
+            iconElementRight={<RaisedButton
+                label="Log Out"
+                primary={true}
+                onClick={handleOpen_3}
+                buttonStyle={{backgroundColor:"#e99833"}}
+            />}
             style={{backgroundColor: "#D50000"}}
         />
     );
@@ -84,6 +94,7 @@ class EditExercise extends React.Component {
             globalState : "",
             open: false,
             open_2: false,
+            open_3: false,
             open_4: false,
             wantdeleteQuestion: "",
             wantedit:"",
@@ -93,6 +104,10 @@ class EditExercise extends React.Component {
         }
         // this.tick  = this.tick.bind(this)
     }
+
+    onClick_2 = () => {
+
+    };
 
 
 
@@ -155,9 +170,35 @@ class EditExercise extends React.Component {
 
     };
 
+    handleOpen_3 = () => {
+        console.log("add new one")
+        this.setState({topic: localStorage.getItem("ChooseEdit")});
+        this.setState({open_3: true});
+    }
+
+    handleClose_3 = () => {
+        console.log("CLOSEeEEEE")
+        this.setState({open_3: false});
+        this.setState({topic: ""})
+        this.setState({question: ""})
+        this.setState({ca: ""})
+        this.setState({cb: ""})
+        this.setState({cc: ""})
+        this.setState({cd: ""})
+        this.setState({value: ""})
+    };
+
+
     handleClose_2 = () => {
         console.log("CLOSEeEEEE")
         this.setState({open_2: false});
+        this.setState({topic: ""})
+        this.setState({question: ""})
+        this.setState({ca: ""})
+        this.setState({cb: ""})
+        this.setState({cc: ""})
+        this.setState({cd: ""})
+        this.setState({value: ""})
     };
 
     handleClose = () => {
@@ -175,11 +216,17 @@ class EditExercise extends React.Component {
         window.location.reload();
     };
 
+    handleOpen_5 = () => {
+        this.setState({open_5: true});
+    };
 
-    // tick = () => {
-    //     this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-    //     this.fetchData();
-    // }
+    handleClose_5 = () => {
+        this.setState({open_5: false});
+        window.location.reload();
+    };
+
+
+
 
     componentDidMount() {
 
@@ -223,15 +270,7 @@ class EditExercise extends React.Component {
         clearInterval(this.interval);
     }
 
-    updateItemStatus = (id, status) => {
-        axios.put(`/update_by_kitchen?id=${id}&currentStatus=${status}`)
-            .then((response) => {
-                this.fetchData()
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+
 
     globalStateHandler = (data) => {
         // perhaps some processing...
@@ -322,6 +361,17 @@ class EditExercise extends React.Component {
     //         this.setState({disable: true})
     //     }
     // };
+    sendRequest = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
 
     checkButtonDisable = () => {
         if (this.state.cd != null) {
@@ -371,6 +421,41 @@ class EditExercise extends React.Component {
 
     }
 
+    makeExercise_1 = () =>{
+        var data = {
+            topic: this.state.topic,
+            question: this.state.question,
+            choiceA: this.state.ca,
+            choiceB: this.state.cb,
+            choiceC: this.state.cc,
+            choiceD: this.state.cd,
+            correct: this.state.value
+        };
+
+        console.log("Make New Exercise");
+        console.log(data);
+        axios.post(`/post_old_topic`, data)
+            .then((response) => {
+                console.log(response)
+
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        this.handleClose_3()
+        this.handleOpen_5();
+        // this.handleOpen_3();
+
+        this.setState({topic: ""});
+        this.setState({question: ""});
+        this.setState({ca: ""});
+        this.setState({cb: ""});
+        this.setState({cc: ""});
+        this.setState({cd: ""});
+        this.setState({value: ""});
+
+    }
+
 
 
     render(){
@@ -404,6 +489,21 @@ class EditExercise extends React.Component {
             />,
         ];
 
+        const actions_3 = [
+            <FlatButton
+                label="Cancel"
+                backgroundColor="#F44336"
+                onClick={()=> this.handleClose_3()}
+                style={{float:"left"}}
+            />,
+            <FlatButton
+                label="Save"
+                backgroundColor="#8BC34A"
+                disabled={this.state.disable}
+                onClick={()=> this.makeExercise_1()}
+            />,
+        ];
+
         const actions_4 = [
             <FlatButton
                 label="Close"
@@ -413,10 +513,35 @@ class EditExercise extends React.Component {
 
         ];
 
+        const actions_5 = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={this.handleClose_5}
+            />,
+
+        ];
+
         return (
             <div >
 
-                <Bar onClick={()=>this.props.history.push('/admin_list_of_exercise')}/>
+                {/*<Bar onClick={()=>this.props.history.push('/admin_list_of_exercise')}/>*/}
+
+                <AppBar
+                    title={` ${String(localStorage.getItem("ChooseEdit"))} `}
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/admin_list_of_exercise')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Add"
+                        primary={true}
+                        icon={<Foradd />}
+                        onClick={this.handleOpen_3}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                    />}
+                    style={{backgroundColor: "#D50000"}}
+                />
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
@@ -442,7 +567,7 @@ class EditExercise extends React.Component {
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <MenuItem  primaryText="Edit This Question" bugs={this.state.globalState} onClick={() => this.handleOpen_edit(each.id)} />
+                                        <MenuItem  leftIcon={<Foredit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen_edit(each.id)} />
                                         {/*<MenuItem  primaryText="Delete" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
@@ -452,7 +577,7 @@ class EditExercise extends React.Component {
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<MenuItem  primaryText="Edit" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
-                                        <MenuItem  primaryText="Delete This Question" bugs={this.state.globalState} onClick={() => this.handleOpen(each.id)} />
+                                        <MenuItem leftIcon={<Fordessertkit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.id)} />
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
@@ -559,12 +684,112 @@ class EditExercise extends React.Component {
                     <br />
 
                 </Dialog>
+                {/*-----------------------------------------------------------------*/}
+                {/*-----------------------------------------------------------------*/}
+                {/*-----------------------------------------------------------------*/}
+                {/*-----------------------------------------------------------------*/}
+
+                <Dialog
+                    title="Add new Question"
+                    modal={true}
+                    open={this.state.open_3}
+                    actions={actions_3}
+                    titleStyle={{backgroundColor:"#D50000", color:"white"}}
+                    contentStyle={{ width: '30%',}}
+                    autoScrollBodyContent={true}
+                >
+                    {/*<TextField*/}
+                    {/*style={{marginLeft:"20px"}}*/}
+                    {/*floatingLabelText="Topic"*/}
+                    {/*value={this.state.topic}*/}
+                    {/*onChange={(e)=> this.updateTopic(e)}*/}
+                    {/*underlineFocusStyle={styles.underlineStyle}*/}
+                    {/*floatingLabelFocusStyle={styles.floatingLabelFocusStyle}*/}
+                    {/*/>*/}
+                    {/*<br />*/}
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Question"
+                        value={this.state.question}
+                        onChange={(f)=> this.updateQuestion(f)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+
+
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Choice A"
+                        value={this.state.ca}
+                        onChange={(g)=> this.updateChoiceA(g)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Choice B"
+                        value={this.state.cb}
+                        onChange={(h)=> this.updateChoiceB(h)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Choice C"
+                        value={this.state.cc}
+                        onChange={(i)=> this.updateChoiceC(i)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Choice D"
+                        value={this.state.cd}
+                        onChange={(j)=> this.updateChoiceD(j)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+                    <SelectField
+                        floatingLabelText="Choose the correct answer."
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        style={{marginLeft:"20px"}}
+                    >
+                        <MenuItem value={"Choice A"} primaryText="Choice A" />
+                        <MenuItem value={"Choice B"} primaryText="Choice B" />
+                        <MenuItem value={"Choice C"} primaryText="Choice C" />
+                        <MenuItem value={"Choice D"} primaryText="Choice D" />
+                        {/*<MenuItem value={5} primaryText="Weekly" />*/}
+                    </SelectField>
+                    <br />
+
+                </Dialog>
+
+
+
 
                 <Dialog
                     title="Successfully Edited"
                     actions={actions_4}
                     modal={false}
                     open={this.state.open_4}
+                    onRequestClose={this.handleClose}
+                >
+                    {/*Are you sure to delete all the questions that belong to this topic?*/}
+                </Dialog>
+
+
+                <Dialog
+                    title="Successfully Added"
+                    actions={actions_5}
+                    modal={false}
+                    open={this.state.open_5}
                     onRequestClose={this.handleClose}
                 >
                     {/*Are you sure to delete all the questions that belong to this topic?*/}

@@ -199,8 +199,8 @@ class AdminListOfExercise extends React.Component {
                         <TableRow>
                             {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
                             <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn>---Edit---</TableHeaderColumn>
-                            <TableHeaderColumn>   Delete</TableHeaderColumn>
+                            <TableHeaderColumn>Edit</TableHeaderColumn>
+                            <TableHeaderColumn>Delete</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
                         </TableRow>
                     </TableHeader>
@@ -216,7 +216,7 @@ class AdminListOfExercise extends React.Component {
                                     <TableRowColumn>{each.topic}</TableRowColumn>
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <MenuItem leftIcon={<Foredit />}   bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />
+                                        <MenuItem leftIcon={<Foredit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />
                                         {/*<MenuItem  primaryText="Delete" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
@@ -224,7 +224,7 @@ class AdminListOfExercise extends React.Component {
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<MenuItem  primaryText="Edit" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
-                                        <MenuItem  leftIcon={<Fordessertkit />}  bugs={this.state.globalState} onClick={() => this.handleOpen(each.topic)} />
+                                        <MenuItem  leftIcon={<Fordessertkit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.topic)} />
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
