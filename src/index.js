@@ -17,6 +17,7 @@ import Signup from "./Signup";
 import MainMenuAdmin from "./MainMenuAdmin";
 import AdminManageExercise from "./AdminManageExercise"
 import MainStudent from "./MainStudent"
+import MainStudentUnpaid from "./MainStudentUnpaid"
 import AdminManageVideo from "./AdminManageVideo"
 import StudentChooseVideo from "./StudentChooseVideo"
 import StudentChooseExercise from "./StudentChooseExercise"
@@ -27,6 +28,7 @@ import AdminListOfExercise from "./AdminListOfExercise"
 import EditExercise from "./EditExercise"
 import VideoStudent from "./VideoStudent"
 import HLSPage from "./HLSPage"
+import Mother from "./Mother"
 
 // import checkout from "./checkout.php";
 
@@ -52,6 +54,8 @@ function Path(){
                         <Route path="/admin_edit_exercise" exact component={EditExercise} />
                         <Route path="/video_student" exact component={VideoStudent} />
                         <Route path="/hls_page" exact component={HLSPage} />
+                        <Route path="/mother" component={Mother}/>
+                        <Route path="/mainstudentunpaid" component={MainStudentUnpaid}/>
 
 
                     </div>

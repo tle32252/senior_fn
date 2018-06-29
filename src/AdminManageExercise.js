@@ -177,7 +177,6 @@ class AdminManageExercise extends Component {
         this.setState({cc: ""});
         this.setState({cd: ""});
         this.setState({value: ""});
-
     }
 
     makeExercise_2 = () =>{

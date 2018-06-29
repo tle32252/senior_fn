@@ -110,7 +110,6 @@ class EditExercise extends React.Component {
     };
 
 
-
     handleSubmit = () => {
         axios.post(`/delete_question?id=${this.state.wantdeleteQuestion}`)
             .then((response) => {

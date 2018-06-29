@@ -21,7 +21,7 @@ import Dialog from 'material-ui/Dialog';
 
 
 
-class MainStudent extends Component {
+class MainStudentUnpaid extends Component {
 
     constructor(props) {
         super(props);
@@ -38,19 +38,6 @@ class MainStudent extends Component {
         axios.get(`/user/whoami`)
             .then((response) => {
                 // console.log("this is check")
-                axios.get(`/user/check_paid_2?username=${response.data}`)
-                    .then((response) => {
-                        console.log("True")
-
-                    })
-                    .catch((error) => {
-                        console.log("False")
-                        console.log(error)
-                        this.props.history.push('/mainstudentunpaid')
-                    })
-
-
-
                 console.log(response)
                 console.log(response.data);
 
@@ -74,25 +61,25 @@ class MainStudent extends Component {
                 this.props.history.push('/')
             })
 
-        // const { OmiseCard }  = window;
-        // OmiseCard.configure({
-        //     publicKey: 'pkey_test_5brcmnpnbk98pwnizcv',
-        //     amount: 10000,
-        //     image: 'https://i.imgur.com/FjBMpPM.jpg',
-        //     onCreateTokenSuccess: (x) => {
-        //         this.setState({token: x})
-        //         this.onSubmit();
-        //     },
-        //     submitAuto: 'no'
-        //
-        // });
-        // OmiseCard.configureButton('#checkout-button', {
-        //     frameLabel: 'Max Toeic',
-        //     submitLabel: 'PAY NOW ',
-        //     submitFormTarget: '#checkout-form'
-        // });
-        //
-        // OmiseCard.attach();
+        const { OmiseCard }  = window;
+        OmiseCard.configure({
+            publicKey: 'pkey_test_5brcmnpnbk98pwnizcv',
+            amount: 10000,
+            image: 'https://i.imgur.com/FjBMpPM.jpg',
+            onCreateTokenSuccess: (x) => {
+                this.setState({token: x})
+                this.onSubmit();
+            },
+            submitAuto: 'no'
+
+        });
+        OmiseCard.configureButton('#checkout-button', {
+            frameLabel: 'Max Toeic',
+            submitLabel: 'PAY NOW ',
+            submitFormTarget: '#checkout-form'
+        });
+
+        OmiseCard.attach();
     }
 
     // componentDidMount() {
@@ -269,11 +256,11 @@ class MainStudent extends Component {
                     />}
                 />
                 <div class="center">
-                    <h4> PLEASE CHOOSE YOUR ACTION </h4>
+                    <h4> Please Pay The Course To Start Your Lecture </h4>
                     <List>
-                        <ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>
-                        <ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>
-                        <ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>
+                        {/*<ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>*/}
+                        {/*<ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>*/}
+                        {/*<ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
 
 
                         {/*<ListItem primaryText="Pay The Course"  disabled={false}  leftIcon={<Formoney />} type="submit" value="Pay The Course." id="checkout-button"/>*/}
@@ -290,26 +277,26 @@ class MainStudent extends Component {
                         {/*/>*/}
 
 
-                        {/*<form*/}
-                            {/*onSubmit = {(e) => this.onSubmit(e)}*/}
-                            {/*id="checkout-form"*/}
-                            {/*name="checkoutForm"*/}
-                            {/*method="POST"*/}
+                        <form
+                            onSubmit = {(e) => this.onSubmit(e)}
+                            id="checkout-form"
+                            name="checkoutForm"
+                            method="POST"
 
-                            {/*action="http://localhost:8080/user/omiseCharge"  >*/}
-                            {/*<ListItem*/}
-                                {/*hidden={true}*/}
-                                {/*primaryText="Pay The Course"*/}
-                                {/*disabled={false}*/}
-                                {/*leftIcon={<Formoney/>}*/}
-                                {/*type="submit"*/}
-                                {/*value="Pay The Course."*/}
-                                {/*id="checkout-button" />*/}
-                        {/*</form>*/}
+                            action="http://localhost:8080/user/omiseCharge"  >
+                            <ListItem
+                                hidden={true}
+                                primaryText="Pay The Course"
+                                disabled={false}
+                                leftIcon={<Formoney/>}
+                                type="submit"
+                                value="Pay The Course."
+                                id="checkout-button" />
+                        </form>
 
 
                         {/*<form name="checkoutForm" method="POST" action="checkout.php" >*/}
-                            {/*<input type="submit" disabled value="Pasdyyy" id="checkout-button"/>*/}
+                        {/*<input type="submit" disabled value="Pasdyyy" id="checkout-button"/>*/}
                         {/*</form>*/}
 
 
@@ -342,4 +329,4 @@ class MainStudent extends Component {
     }
 }
 
-export default MainStudent;
+export default MainStudentUnpaid;
