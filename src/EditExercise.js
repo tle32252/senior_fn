@@ -56,6 +56,26 @@ function Bar({onClick, handleOpen_3}) {
 }
 
 
+function LoginButton({onClick}){
+    return (<RaisedButton label="Topic"
+                          fullWidth={false}
+                          primary={true}
+                          onClick={onClick}
+                          icon={<Foredit />}
+    />)
+}
+
+function SignupButton({onClick}){
+    return (<RaisedButton label="Topic"
+                          fullWidth={false}
+                          secondary={true}
+                          onClick={onClick}
+                          icon={<Fordessertkit />}
+        // secondary={true}
+    />)
+}
+
+
 const styles = {
     button: {
         margin: 12,
@@ -101,6 +121,7 @@ class EditExercise extends React.Component {
             eiei: String(localStorage.getItem("ChooseEdit")),
             role: "",
             iam: "",
+            disable: true,
         }
         // this.tick  = this.tick.bind(this)
     }
@@ -372,8 +393,18 @@ class EditExercise extends React.Component {
             })
     };
 
+    // checkButtonDisable = () => {
+    //     if (this.state.cd != null) {
+    //         console.log("False")
+    //         this.setState({disable: false})
+    //     }
+    //     else{
+    //         this.setState({disable: true})
+    //         console.log("True")
+    //     }
+    // };
     checkButtonDisable = () => {
-        if (this.state.cd != null) {
+        if (this.state.question != null && this.state.ca != null && this.state.cb != null && this.state.cc != null && this.state.cd != null && this.state.value != null) {
             console.log("False")
             this.setState({disable: false})
         }
@@ -566,7 +597,8 @@ class EditExercise extends React.Component {
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <MenuItem  leftIcon={<Foredit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen_edit(each.id)} />
+                                        {/*<MenuItem  leftIcon={<Foredit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen_edit(each.id)} />*/}
+                                        <LoginButton onClick={() => this.handleOpen_edit(each.id)}/>
                                         {/*<MenuItem  primaryText="Delete" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
@@ -576,7 +608,8 @@ class EditExercise extends React.Component {
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<MenuItem  primaryText="Edit" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
-                                        <MenuItem leftIcon={<Fordessertkit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.id)} />
+                                        {/*<MenuItem leftIcon={<Fordessertkit />} primaryText="Question"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.id)} />*/}
+                                        <SignupButton onClick={() => this.handleOpen(each.id)}/>
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>

@@ -273,7 +273,7 @@ class MainStudent extends Component {
                     <List>
                         <ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>
                         <ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>
-                        <ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>
+                        {/*<ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
 
 
                         {/*<ListItem primaryText="Pay The Course"  disabled={false}  leftIcon={<Formoney />} type="submit" value="Pay The Course." id="checkout-button"/>*/}

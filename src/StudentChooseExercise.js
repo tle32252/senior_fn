@@ -37,6 +37,14 @@ function Bar({onClick}) {
     );
 }
 
+function LoginButton({onClick}){
+    return (<RaisedButton label="Do this"
+                          fullWidth={false}
+                          primary={true}
+                          onClick={onClick}
+    />)
+}
+
 
 class StudentChooseExercise extends React.Component {
     constructor(props) {
@@ -176,7 +184,8 @@ class StudentChooseExercise extends React.Component {
                                     <TableRowColumn>{each.topic}</TableRowColumn>
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />
+                                        {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
+                                        <LoginButton onClick={() => this.globalStateHandler(each.topic)}/>
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>

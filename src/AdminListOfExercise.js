@@ -67,6 +67,25 @@ const styles = {
     },
 };
 
+
+function LoginButton({onClick}){
+    return (<RaisedButton label="Topic"
+                          fullWidth={false}
+                          primary={true}
+                          onClick={onClick}
+                          icon={<Foredit />}
+    />)
+}
+
+function SignupButton({onClick}){
+    return (<RaisedButton label="Topic"
+                          fullWidth={false}
+                          secondary={true}
+                          onClick={onClick}
+                          icon={<Fordessertkit />}
+        // secondary={true}
+    />)
+}
 function Bar({onClick}) {
     return(
         <AppBar
@@ -101,7 +120,8 @@ class AdminListOfExercise extends React.Component {
             wantdelete: "",
             iam: "",
             role: "",
-            fonytas: ""
+            fonytas: "",
+            disable: true,
         }
         // this.tick  = this.tick.bind(this)
     }
@@ -186,15 +206,7 @@ class AdminListOfExercise extends React.Component {
         clearInterval(this.interval);
     }
 
-    updateItemStatus = (id, status) => {
-        axios.put(`/update_by_kitchen?id=${id}&currentStatus=${status}`)
-            .then((response) => {
-                this.fetchData()
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+
 
     globalStateHandler = (data) => {
         // perhaps some processing...
@@ -228,7 +240,7 @@ class AdminListOfExercise extends React.Component {
             .catch((error) => {
                 console.log(error)
             });
-        this.handleClose();
+        this.handleClose_2();
         this.handleOpen_3();
 
         this.setState({topic: ""});
@@ -302,6 +314,15 @@ class AdminListOfExercise extends React.Component {
         console.log(this.state.value)
     };
 
+    handleOpen_3 = () => {
+        this.setState({open_3: true});
+    };
+
+    handleClose_3 = () => {
+        this.setState({open_3: false});
+        window.location.reload();
+    };
+
     iWillLoopForU = (each) => {
         console.log(each)
         each.map((elt) => {
@@ -339,6 +360,15 @@ class AdminListOfExercise extends React.Component {
                 disabled={this.state.disable}
                 onClick={()=> this.makeExercise_1()}
             />,
+        ];
+
+        const actions_3 = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={this.handleClose_3}
+            />,
+
         ];
 
         return (
@@ -385,7 +415,8 @@ class AdminListOfExercise extends React.Component {
                                     <TableRowColumn>{each.topic}</TableRowColumn>
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <MenuItem leftIcon={<Foredit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />
+                                        {/*<MenuItem leftIcon={<Foredit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
+                                        <LoginButton onClick={() => this.globalStateHandler(each.topic)}/>
                                         {/*<MenuItem  primaryText="Delete" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
@@ -393,7 +424,8 @@ class AdminListOfExercise extends React.Component {
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<MenuItem  primaryText="Edit" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
-                                        <MenuItem  leftIcon={<Fordessertkit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.topic)} />
+                                        {/*<MenuItem  leftIcon={<Fordessertkit />} primaryText="Topic"  bugs={this.state.globalState} onClick={() => this.handleOpen(each.topic)} />*/}
+                                        <SignupButton onClick={() => this.handleOpen(each.topic)}/>
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
@@ -495,6 +527,16 @@ class AdminListOfExercise extends React.Component {
                         {/*<MenuItem value={5} primaryText="Weekly" />*/}
                     </SelectField>
                     <br />
+                </Dialog>
+
+                <Dialog
+                    title="Successfully Added"
+                    actions={actions_3}
+                    modal={false}
+                    open={this.state.open_3}
+                    onRequestClose={this.handleClose}
+                >
+                    {/*Are you sure to delete all the questions that belong to this topic?*/}
                 </Dialog>
 
 

@@ -2,6 +2,8 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
+import Forvid from 'material-ui/svg-icons/notification/ondemand-video';
+
 
 
 import {
@@ -35,6 +37,15 @@ function Bar({onClick}) {
             style={{backgroundColor: "#D50000"}}
         />
     );
+}
+
+function LoginButton({onClick}){
+    return (<RaisedButton label="Watch this"
+                          fullWidth={false}
+                          primary={true}
+                          onClick={onClick}
+                          icon={<Forvid />}
+    />)
 }
 
 
@@ -107,10 +118,13 @@ class StudentChooseVideo extends React.Component {
         clearInterval(this.interval);
     }
 
-    updateItemStatus = (id, status) => {
-        axios.put(`/update_by_kitchen?id=${id}&currentStatus=${status}`)
+    makeJwt = (data) => {
+        // /user/make_jwt?username=tle&video=asdsad
+        axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
             .then((response) => {
-                this.fetchData()
+                console.log(response.data)
+                localStorage.setItem('Jwt', response.data);
+
             })
             .catch((error) => {
                 console.log(error)
@@ -139,6 +153,17 @@ class StudentChooseVideo extends React.Component {
             console.log(elt)
         })
     };
+
+    globalStateHandler = (data) => {
+        // perhaps some processing...
+        this.makeJwt(data);
+
+        this.setState({
+            globalState: data,
+        })
+        localStorage.setItem('ChooseWatch', data);
+        this.props.history.push('/hls_page')
+    }
 
     render(){
         const {data, showCheckboxes} = this.state
@@ -180,7 +205,10 @@ class StudentChooseVideo extends React.Component {
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        <a href={each.url+"?jwt=sadasd"}>  Watch This</a>
+                                        {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
+                                        {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
+                                        <LoginButton onClick={() => this.globalStateHandler(each.url)}/>
+
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
                                         {/*/>*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
