@@ -2,7 +2,10 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
-import Forvid from 'material-ui/svg-icons/action/done';
+import Forvid from 'material-ui/svg-icons/action/delete';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 
 
 
@@ -29,7 +32,7 @@ import {
 function Bar({onClick}) {
     return(
         <AppBar
-            title="List of Students"
+            title="Video Lists"
             iconElementLeft={
                 <IconButton onClick={onClick}>
                     <BackIcon/>
@@ -40,7 +43,7 @@ function Bar({onClick}) {
 }
 
 function LoginButton({onClick}){
-    return (<RaisedButton label="Exercises"
+    return (<RaisedButton label="Delete this"
                           fullWidth={false}
                           secondary={true}
                           onClick={onClick}
@@ -49,24 +52,23 @@ function LoginButton({onClick}){
 }
 
 
-class AdminListOfStudent extends React.Component {
+class AdminListOfVideo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             showCheckboxes: false,
             data: [],
             secondsElapsed: 0,
-            globalState : "",
-            iam: "",
             role: "",
+            iam: "",
         }
-        // this.tick  = this.tick.bind(this)
+        this.tick  = this.tick.bind(this)
     }
 
-    // tick = () => {
-    //     this.setState({secondsElapsed: this.state.secondsElapsed + 1});
-    //     this.fetchData();
-    // }
+    tick = () => {
+        this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+        this.fetchData();
+    }
 
     componentDidMount() {
         axios.get(`/user/whoami`)
@@ -94,33 +96,43 @@ class AdminListOfStudent extends React.Component {
                 this.props.history.push('/')
             })
     }
+    // componentDidMount() {
+    //     axios.get(`/user/whoami`)
+    //         .then((response) => {
+    //             console.log("this is check")
+    //             console.log(response.data);
+    //             if(response.data === "table"){
+    //                 this.props.history.push('/menu')
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //             this.props.history.push('/')
+    //         });
+    //     this.fetchData()
+    //     this.interval = setInterval(this.fetchData, 5000);
+    // }
 
     componentWillUnmount = () =>{
         clearInterval(this.interval);
     }
 
-    updateItemStatus = (id, status) => {
-        axios.put(`/update_by_kitchen?id=${id}&currentStatus=${status}`)
+    makeJwt = (data) => {
+        // /user/make_jwt?username=tle&video=asdsad
+        axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
             .then((response) => {
-                this.fetchData()
+                console.log(response.data)
+                localStorage.setItem('Jwt', response.data);
+
             })
             .catch((error) => {
                 console.log(error)
             })
     }
 
-    globalStateHandler = (data) => {
-        // perhaps some processing...
-        this.setState({
-            globalState: data,
-        })
-        localStorage.setItem('ChooseViewExercise', data);
-        this.props.history.push('/admin_view_each_student')
-    }
-
     fetchData = () => {
         console.log("fetch")
-        axios.get("/user/all_student")
+        axios.get("/video_item")
             .then((response) => {
                 this.setState({data: response.data})
                 console.log(this.state.data)
@@ -141,24 +153,75 @@ class AdminListOfStudent extends React.Component {
         })
     };
 
+    globalStateHandler = (data) => {
+        // perhaps some processing...
+        this.makeJwt(data);
+
+        this.setState({
+            globalState: data,
+        })
+        localStorage.setItem('ChooseWatch', data);
+        this.props.history.push('/hls_page')
+    }
+
+    handleOpen = (eiei) => {
+        console.log(eiei)
+
+        this.setState({wantdeletevid: eiei})
+        this.setState({open: true});
+        // console.log(this.state.wantdelete)
+
+    };
+
+    handleSubmit = () => {
+        console.log(this.state.wantdeletevid)
+        axios.post(`/delete_video?id=${this.state.wantdeletevid}`)
+            .then((response) => {
+                console.log("Delete")
+                console.log(response)
+                this.setState({open: false});
+                window.location.reload();
+                // this.props.history.push('/admin_list_of_exercise')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
+    handleClose = () => {
+        // this.setState({wantdelete: ""})
+        this.setState({open: false});
+        // console.log(this.state.wantdelete)
+    };
+
     render(){
         const {data, showCheckboxes} = this.state
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+            <FlatButton
+                label="Submit"
+                secondary={true}
+                // keyboardFocused={true}
+                onClick={this.handleSubmit}
+            />,
+        ];
         return (
             <div >
 
-                <Bar onClick={()=>this.props.history.push('/mainmenuadmin')}/>
+
+                <Bar onClick={()=>this.props.history.push('/admin_manage_video')}/>
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
 
                         <TableRow>
-                            {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            {/*<TableHeaderColumn>Button</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Line</TableHeaderColumn>
-                            <TableHeaderColumn>Email</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                            <TableHeaderColumn>Progress</TableHeaderColumn>
+                            <TableHeaderColumn>Topic</TableHeaderColumn>
+                            <TableHeaderColumn>Description</TableHeaderColumn>
+                            <TableHeaderColumn>Action</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
                         </TableRow>
                     </TableHeader>
@@ -167,32 +230,32 @@ class AdminListOfStudent extends React.Component {
 
                         {data.map((each) => {
 
+
+
                             return(
 
                                 <TableRow>
-                                    {/*<TableRowColumn>{each.value}</TableRowColumn>*/}
-                                    <TableRowColumn>{each.name}</TableRowColumn>
-                                    <TableRowColumn>{each.line}</TableRowColumn>
-                                    <TableRowColumn>{each.email}</TableRowColumn>
-                                    <TableRowColumn>{each.status}</TableRowColumn>
+                                    <TableRowColumn>{each.topic}</TableRowColumn>
+                                    <TableRowColumn>{each.description}</TableRowColumn>
+                                    {/*<TableRowColumn>*/}
+                                    {/*/!* {<DropDownMenuOpenImmediateExample />} *!/*/}
+                                    {/*<MenuItem  primaryText="Waiting" onClick={() => this.updateItemStatus(each.key.id, "Waiting")}/>*/}
+                                    {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
+                                    {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
+                                    {/*</TableRowColumn>*/}
+                                    {/*<TableRowColumn>{each.id}</TableRowColumn>*/}
+
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.username)}/>
+                                        <LoginButton onClick={() => this.handleOpen(each.id)}/>
 
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
                                         {/*/>*/}
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
-                                    {/*<TableRowColumn>*/}
-                                        {/*/!* {<DropDownMenuOpenImmediateExample />} *!/*/}
-                                        {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.name)} />*/}
-                                        {/*/!*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*!/*/}
-                                        {/*/!*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*!/*/}
-                                    {/*</TableRowColumn>*/}
-                                    {/*<TableRowColumn>{each.key.currentStatus}</TableRowColumn>*/}
                                     {/* <TableRowColumn> <RaisedButton onClick={() => console.log(each)}/> </TableRowColumn> */}
                                 </TableRow>
                             )
@@ -204,9 +267,19 @@ class AdminListOfStudent extends React.Component {
                     </TableBody>
                 </Table>
 
+                <Dialog
+                    title="Confirm Delete ! "
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                >
+                    Are you sure you want to delete this video?
+                </Dialog>
+
             </div>
         )
     }
 }
 
-export default AdminListOfStudent;
+export default AdminListOfVideo;

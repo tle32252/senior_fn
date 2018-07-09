@@ -27,6 +27,7 @@ import './style.css'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
 import AppBar from 'material-ui/AppBar';
+import axios from "./AxiosConfiguration";
 
 
 const DURATION = 60
@@ -34,10 +35,10 @@ const SOURCE = ''
 const TOKEN = ''
 
 
-function Bar({onClick}) {
+function Bar({onClick,eiei}) {
     return(
         <AppBar
-            title="Video"
+            title={eiei}
             iconElementLeft={
                 <IconButton onClick={onClick}>
                     <BackIcon/>
@@ -54,17 +55,67 @@ class App extends Component {
         this.state = {
             source: String(localStorage.getItem("ChooseWatch")),
             token: String(localStorage.getItem("Jwt")),
-            // duration: DURATION,
-            // readyToPlay: false
+
         }
 
-        // this.handlePlayButton = this.handlePlayButton.bind(this)
 
-        // window.addEventListener('popstate', () => {
-        //     console.log('pop state')
-        //     this.setComponentState()
-        // })
     }
+
+    // componentDidMount() {
+    //     axios.get(`/user/whoami`)
+    //         .then((response) => {
+    //             // console.log("this is check")
+    //             // axios.get(`/user/check_paid_2?username=${response.data}`)
+    //             //     .then((response) => {
+    //             //         console.log("True")
+    //             //
+    //             //     })
+    //             //     .catch((error) => {
+    //             //         console.log("False")
+    //             //         console.log(error)
+    //             //         this.props.history.push('/mainstudentunpaid')
+    //             //     })
+    //
+    //             console.log(response)
+    //             console.log(response.data);
+    //
+    //             console.log("this is for student")
+    //             this.setState({role: response.data})
+    //             this.setState({iam: response.data})
+    //             console.log(this.state.role)
+    //             console.log(this.state.iam)
+    //             this.fetchData()
+    //
+    //             // if(response.data === "admin"){
+    //             //
+    //             // }
+    //             // else {
+    //             //     this.props.history.push('/')
+    //             // }
+    //
+    //
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //             console.log("bye bye")
+    //             this.props.history.push('/')
+    //         })
+    //     // axios.get(`/user/whoami`)
+    //     //     .then((response) => {
+    //     //         console.log("this is check")
+    //     //         console.log(response.data);
+    //     //         if(response.data === "table"){
+    //     //             this.props.history.push('/menu')
+    //     //         }
+    //     //     })
+    //     //     .catch((error) => {
+    //     //         console.log(error)
+    //     //         this.props.history.push('/')
+    //     // console.log("tle");
+    //     //     });
+    //
+    //     // this.interval = setInterval(this.fetchData, 5000);
+    // }
 
     // componentDidMount () {
     //     this.setState({ DURATION: 60 })
@@ -114,6 +165,7 @@ class App extends Component {
     //     return getStartEnd(duration, chapters)
     // }
     //
+
     setComponentState () {
         const { token, url, duration } = parseQueryString()
         const newState = {}
@@ -149,10 +201,17 @@ class App extends Component {
 
         return (
 
-            <div className='player'>
-                <Bar onClick={()=>this.props.history.push('/student_choose_video')}/>
+            <div>
+                <Bar
+                    onClick={()=>this.props.history.push('/student_choose_video')}
+                    // eiei =
+                    eiei={` ${String(localStorage.getItem("ChooseWatch"))} `}
+                    // se={true}
+
+                />
 
                 <Player {...playerOptions} />
+
                 {/*{ !readyToPlay &&*/}
                 {/*<form onSubmit={this.handlePlayButton}>*/}
                 {/*<span>Video source:</span>*/}
@@ -186,22 +245,3 @@ class App extends Component {
 }
 
 export default App
-
-// import React, { Component } from 'react';
-// import HLSPlayer from 'react-hls';
-// // import 'react-hls/src/style.css'; // need to import basic styles
-// // import 'react-hls/src/icons.css'; // need to import basic icons
-//
-// class HLSPage extends Component {
-//     render() {
-//         const source = 'http://192.168.43.234:8085/hls/2130.mp4/index.m3u8';
-//
-//         return (
-//             <div>
-//                 <HLSPlayer source={source} />
-//             </div>
-//         );
-//     }
-// }
-//
-// export default HLSPage;

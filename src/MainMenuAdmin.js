@@ -4,6 +4,7 @@ import {List, ListItem} from 'material-ui/List';
 import ForTable from 'material-ui/svg-icons/av/music-video';
 import ForKit from 'material-ui/svg-icons/communication/import-contacts';
 import Fordessertkit from 'material-ui/svg-icons/social/people';
+import Fordone from 'material-ui/svg-icons/action/done-all';
 import ForCashier from 'material-ui/svg-icons/editor/attach-money';
 import AddMenu from 'material-ui/svg-icons/content/add-circle-outline';
 import Chart from 'material-ui/svg-icons/editor/insert-chart';
@@ -90,8 +91,10 @@ class MainMenuAdmin extends Component {
                     <h4> PLEASE CHOOSE YOUR ACTION </h4>
                     <List>
                         <ListItem primaryText="Manage Videos" leftIcon={<ForTable />} onClick={()=>this.props.history.push('/admin_manage_video')}/>
-                        <ListItem primaryText="Manage Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_manage_exercise')}/>
+                        <ListItem primaryText="Manage Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_list_of_exercise')}/>
                         <ListItem primaryText="List of Students" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>
+                        {/*<ListItem primaryText="Students Exercise Results" leftIcon={<Fordone />} onClick={()=>this.props.history.push('/all_done_exercise')}/>*/}
+
                         {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
                         {/*<ListItem primaryText="Menu Management"*/}
                                   {/*leftIcon={<AddMenu />}*/}

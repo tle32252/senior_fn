@@ -64,7 +64,7 @@ class MainStudentUnpaid extends Component {
         const { OmiseCard }  = window;
         OmiseCard.configure({
             publicKey: 'pkey_test_5brcmnpnbk98pwnizcv',
-            amount: 10000,
+            amount: 100000,
             image: 'https://i.imgur.com/FjBMpPM.jpg',
             onCreateTokenSuccess: (x) => {
                 this.setState({token: x})
@@ -210,6 +210,7 @@ class MainStudentUnpaid extends Component {
     handleClose = () => {
         // this.setState({wantdelete: ""})
         this.setState({open: false});
+        this.props.history.push('/mainstudent')
         // console.log(this.state.wantdelete)
     };
 
@@ -256,7 +257,7 @@ class MainStudentUnpaid extends Component {
                     />}
                 />
                 <div class="center">
-                    <h4> Please Pay The Course To Start Your Lecture </h4>
+                    <h4> Just One Step More ! </h4>
                     <List>
                         {/*<ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>*/}
                         {/*<ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>*/}
@@ -282,8 +283,8 @@ class MainStudentUnpaid extends Component {
                             id="checkout-form"
                             name="checkoutForm"
                             method="POST"
-
-                            action="http://localhost:8080/user/omiseCharge"  >
+                            // action="http://localhost:8080/user/omiseCharge"
+                        >
                             <ListItem
                                 hidden={true}
                                 primaryText="Pay The Course"

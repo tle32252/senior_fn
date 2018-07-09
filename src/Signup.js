@@ -132,15 +132,48 @@ class App extends Component {
         console.log('loginparam', urlencode(loginParams))
         axios.post("/user/register", urlencode(loginParams))
             .then((response) => {
-                localStorage.setItem("role", response.data.role)
-                localStorage.setItem("id", response.data.id)
+                // localStorage.setItem("role", response.data.role)
+                // localStorage.setItem("id", response.data.id)
                 console.log("Regis Success")
                 console.log(response.data);
+                var loginParams = {
+                    username: this.state.username,
+                    password: this.state.password
+                }
+
+                // console.log('loginparam', urlencode(loginParams))
+                axios.post("/login", urlencode(loginParams))
+                    .then((response) => {
+                        // localStorage.setItem("role", response.data.role)
+                        // localStorage.setItem("id", response.data.id)
+                        console.log(response.data);
+                        // console.log("be4 func")
+                        // this.eachstudent();
+                        // axios.get(`/each_student_login?username=${this.state.username}`)
+                        //     console.log("helloooo")
+                        //     .then((response) => {
+                        //         console.log(response)
+                        //     })
+
+                        if (response.data.role === "admin" ){
+                            this.props.history.push('/mainmenuadmin');
+                        }
+                        else{
+
+                            this.props.history.push('/mainstudent');
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        this.setState({show: true})
+                        // console.log(authentication);
+                    })
 
                 //
-                if (response.data.role === "student"){
-                    this.props.history.push('/mainstudent');
-                }
+                // if (response.data.role === "student"){
+                //     this.props.history.push('/mainstudent');
+                // }
                 // else{
                 //     this.props.history.push('/mainmenu');
                 // }

@@ -2,6 +2,8 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
+import LinearProgress from 'material-ui/LinearProgress';
+
 
 
 import {
@@ -69,6 +71,17 @@ class StudentChooseExercise extends React.Component {
         axios.get(`/user/whoami`)
             .then((response) => {
                 // console.log("this is check")
+                axios.get(`/user/check_paid_2?username=${response.data}`)
+                    .then((response) => {
+                        console.log("True")
+
+                    })
+                    .catch((error) => {
+                        console.log("False")
+                        console.log(error)
+                        this.props.history.push('/mainstudentunpaid')
+                    })
+
                 console.log(response)
                 console.log(response.data);
 
@@ -78,6 +91,7 @@ class StudentChooseExercise extends React.Component {
                 console.log(this.state.role)
                 console.log(this.state.iam)
                 this.fetchData()
+                // this.fetchData_2()
 
                 // if(response.data === "admin"){
                 //
@@ -123,21 +137,70 @@ class StudentChooseExercise extends React.Component {
             })
     }
 
-    globalStateHandler = (data) => {
+    globalStateHandler = (data, id) => {
         // perhaps some processing...
         this.setState({
             globalState: data,
         })
         localStorage.setItem('Choose', data);
+        localStorage.setItem('ChooseId', id);
         this.props.history.push('/StudentDoExercise')
     }
+
+    // fetchData_2 = () => {
+    //     console.log("fetch")
+    //     axios.get(`/each_done?username=${this.state.iam}`)
+    //         .then((response) => {
+    //             this.setState({data_2: response.data})
+    //             console.log(this.state.data_2)
+    //             // if (response.data.length == 0){
+    //             //     this.handleOpen_3()
+    //             // }
+    //             // this.state.data.map((each) => {
+    //             //         console.log(each.id);
+    //             //     }
+    //             // )
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // };
 
     fetchData = () => {
         console.log("fetch")
         axios.get("/topic_item")
             .then((response) => {
+                // console.log(response)
                 this.setState({data: response.data})
                 console.log(this.state.data)
+                this.setState({dataLength: response.data.length})
+                axios.get(`/each_done?username=${this.state.iam}`)
+                    .then((response) => {
+                        this.setState({data_2: response.data})
+                        console.log(this.state.data_2)
+                        this.setState({dataLength_2: response.data.length})
+
+                        for (var i = 0; i < this.state.dataLength; i++) {
+                            // console.log(this.state.data[i].id)
+                            for (var j = 0; j < this.state.dataLength_2; j++) {
+                                if (this.state.data[i].id == this.state.data_2[j].exerciseid){
+                                    console.log("yess")
+                                    this.state.data[i].score = this.state.data_2[j].score
+                                    this.state.data[i].outof = this.state.data_2[j].outof
+
+                                }
+                                // else {
+                                //     console.log("nooo")
+                                //     this.state.data[i].score = "-"
+                                //     this.state.data[i].outof = "-"
+                                // }
+                            }
+                        }
+                        console.log(this.state.data)
+                        this.setState({finaldata: this.state.data})
+                        // window.location.reload();
+                    })
+
                 // this.state.data.map((each) => {
                 //         console.log(each.id);
                 //     }
@@ -147,6 +210,8 @@ class StudentChooseExercise extends React.Component {
                 console.log(error)
             })
     };
+
+    // var arrayLength = this.state.data.length;
 
     iWillLoopForU = (each) => {
         console.log(each)
@@ -168,6 +233,9 @@ class StudentChooseExercise extends React.Component {
                         <TableRow>
                             {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
                             <TableHeaderColumn>Name</TableHeaderColumn>
+                            <TableHeaderColumn>Best Score</TableHeaderColumn>
+                            <TableHeaderColumn>OutOf</TableHeaderColumn>
+                            {/*<TableHeaderColumn>Bar</TableHeaderColumn>*/}
                             <TableHeaderColumn>Button</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
                         </TableRow>
@@ -182,13 +250,17 @@ class StudentChooseExercise extends React.Component {
                                 <TableRow>
                                     {/*<TableRowColumn>{each.value}</TableRowColumn>*/}
                                     <TableRowColumn>{each.topic}</TableRowColumn>
+                                    <TableRowColumn>{each.score}</TableRowColumn>
+                                    <TableRowColumn>{each.outof}</TableRowColumn>
+                                    {/*<LinearProgress  mode="determinate" value={each.score/each.outof*100} style={{paddingTop:25}}  />*/}
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.topic)}/>
+                                        <LoginButton onClick={() => this.globalStateHandler(each.topic, each.id)}/>
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
+
                                     {/*<TableRowColumn>{each.key.currentStatus}</TableRowColumn>*/}
                                     {/* <TableRowColumn> <RaisedButton onClick={() => console.log(each)}/> </TableRowColumn> */}
                                 </TableRow>

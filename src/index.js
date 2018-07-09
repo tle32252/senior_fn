@@ -25,10 +25,13 @@ import PopoverExampleConfigurable from "./PopoverExampleConfigurable"
 import StudentDoExercise from "./StudentDoExercise"
 import AdminListOfStudent from "./AdminListOfStudent"
 import AdminListOfExercise from "./AdminListOfExercise"
+import AdminListOfVideo from "./AdminListOfVideo"
 import EditExercise from "./EditExercise"
 import VideoStudent from "./VideoStudent"
 import HLSPage from "./HLSPage"
 import Mother from "./Mother"
+import StudentDone from "./StudentDoneExercise"
+import AdminEachStudent from "./AdminEachStudent"
 
 // import checkout from "./checkout.php";
 
@@ -56,6 +59,11 @@ function Path(){
                         <Route path="/hls_page" exact component={HLSPage} />
                         <Route path="/mother" component={Mother}/>
                         <Route path="/mainstudentunpaid" component={MainStudentUnpaid}/>
+                        <Route path="/admin_list_of_video" component={AdminListOfVideo}/>
+                        <Route path="/student_done" component={StudentDone}/>
+                        <Route path="/admin_view_each_student" component={AdminEachStudent}/>
+
+
 
 
                     </div>

@@ -2,8 +2,6 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
-import Forvid from 'material-ui/svg-icons/action/done';
-
 
 
 import {
@@ -15,6 +13,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 
 import {
     Table,
@@ -29,7 +30,7 @@ import {
 function Bar({onClick}) {
     return(
         <AppBar
-            title="List of Students"
+            title="Exercise That Has Been done"
             iconElementLeft={
                 <IconButton onClick={onClick}>
                     <BackIcon/>
@@ -40,16 +41,15 @@ function Bar({onClick}) {
 }
 
 function LoginButton({onClick}){
-    return (<RaisedButton label="Exercises"
+    return (<RaisedButton label="Do this"
                           fullWidth={false}
-                          secondary={true}
+                          primary={true}
                           onClick={onClick}
-                          icon={<Forvid />}
     />)
 }
 
 
-class AdminListOfStudent extends React.Component {
+class StudentDoneExercise extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -59,6 +59,7 @@ class AdminListOfStudent extends React.Component {
             globalState : "",
             iam: "",
             role: "",
+            eiei: String(localStorage.getItem("ChooseViewExercise")),
         }
         // this.tick  = this.tick.bind(this)
     }
@@ -114,16 +115,20 @@ class AdminListOfStudent extends React.Component {
         this.setState({
             globalState: data,
         })
-        localStorage.setItem('ChooseViewExercise', data);
-        this.props.history.push('/admin_view_each_student')
+        localStorage.setItem('Choose', data);
+        this.props.history.push('/StudentDoExercise')
     }
 
     fetchData = () => {
         console.log("fetch")
-        axios.get("/user/all_student")
+        axios.get(`/each_done?username=${this.state.eiei}`)
             .then((response) => {
                 this.setState({data: response.data})
                 console.log(this.state.data)
+                if (response.data.length == 0){
+                    this.handleOpen_3()
+                }
+
                 // this.state.data.map((each) => {
                 //         console.log(each.id);
                 //     }
@@ -132,6 +137,16 @@ class AdminListOfStudent extends React.Component {
             .catch((error) => {
                 console.log(error)
             })
+    };
+
+    handleOpen_3 = () => {
+        this.setState({open_3: true});
+    };
+
+    handleClose_3 = () => {
+        this.setState({open_3: false});
+        this.props.history.push('/admin_list_of_students')
+
     };
 
     iWillLoopForU = (each) => {
@@ -143,6 +158,13 @@ class AdminListOfStudent extends React.Component {
 
     render(){
         const {data, showCheckboxes} = this.state
+        const actions_3 = [
+            <FlatButton
+                label="Close"
+                secondary={true}
+                onClick={this.handleClose_3}
+            />,
+        ];
         return (
             <div >
 
@@ -153,13 +175,9 @@ class AdminListOfStudent extends React.Component {
 
                         <TableRow>
                             {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            {/*<TableHeaderColumn>Button</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Line</TableHeaderColumn>
-                            <TableHeaderColumn>Email</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                            <TableHeaderColumn>Progress</TableHeaderColumn>
-                            {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
+                            <TableHeaderColumn>Exercise</TableHeaderColumn>
+                            <TableHeaderColumn>Score</TableHeaderColumn>
+                            <TableHeaderColumn>OutOf</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
 
@@ -171,26 +189,15 @@ class AdminListOfStudent extends React.Component {
 
                                 <TableRow>
                                     {/*<TableRowColumn>{each.value}</TableRowColumn>*/}
-                                    <TableRowColumn>{each.name}</TableRowColumn>
-                                    <TableRowColumn>{each.line}</TableRowColumn>
-                                    <TableRowColumn>{each.email}</TableRowColumn>
-                                    <TableRowColumn>{each.status}</TableRowColumn>
-                                    <TableRowColumn>
-                                        {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
-                                        {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.username)}/>
-
-                                        {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
-                                        {/*/>*/}
-                                        {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
-                                        {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
-                                    </TableRowColumn>
+                                    <TableRowColumn>{each.exercise}</TableRowColumn>
+                                    <TableRowColumn>{each.score}</TableRowColumn>
+                                    <TableRowColumn>{each.outof}</TableRowColumn>
                                     {/*<TableRowColumn>*/}
-                                        {/*/!* {<DropDownMenuOpenImmediateExample />} *!/*/}
-                                        {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.name)} />*/}
-                                        {/*/!*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*!/*/}
-                                        {/*/!*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*!/*/}
+                                    {/*/!* {<DropDownMenuOpenImmediateExample />} *!/*/}
+                                    {/*/!*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*!/*/}
+                                    {/*<LoginButton onClick={() => this.globalStateHandler(each.topic)}/>*/}
+                                    {/*/!*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*!/*/}
+                                    {/*/!*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*!/*/}
                                     {/*</TableRowColumn>*/}
                                     {/*<TableRowColumn>{each.key.currentStatus}</TableRowColumn>*/}
                                     {/* <TableRowColumn> <RaisedButton onClick={() => console.log(each)}/> </TableRowColumn> */}
@@ -204,9 +211,19 @@ class AdminListOfStudent extends React.Component {
                     </TableBody>
                 </Table>
 
+                <Dialog
+                    title="This student didn't do any exercise yet."
+                    actions={actions_3}
+                    modal={false}
+                    open={this.state.open_3}
+                    onRequestClose={this.handleClose}
+                >
+                    {/*Are you sure to delete all the questions that belong to this topic?*/}
+                </Dialog>
+
             </div>
         )
     }
 }
 
-export default AdminListOfStudent;
+export default StudentDoneExercise;

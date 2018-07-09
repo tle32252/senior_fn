@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import {List, ListItem} from 'material-ui/List';
 import ForTable from 'material-ui/svg-icons/av/music-video';
+import ForDone from 'material-ui/svg-icons/action/done-all';
 import ForKit from 'material-ui/svg-icons/communication/import-contacts';
 import Fordessertkit from 'material-ui/svg-icons/action/supervisor-account';
 import Formoney from 'material-ui/svg-icons/editor/attach-money';
@@ -273,6 +274,7 @@ class MainStudent extends Component {
                     <List>
                         <ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>
                         <ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>
+                        {/*<ListItem primaryText="Done Exercises" leftIcon={<ForDone />} onClick={()=>this.props.history.push('/student_done')}/>*/}
                         {/*<ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
 
 

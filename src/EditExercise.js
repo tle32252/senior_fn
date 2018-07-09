@@ -57,7 +57,7 @@ function Bar({onClick, handleOpen_3}) {
 
 
 function LoginButton({onClick}){
-    return (<RaisedButton label="Topic"
+    return (<RaisedButton label="Question"
                           fullWidth={false}
                           primary={true}
                           onClick={onClick}
@@ -66,7 +66,7 @@ function LoginButton({onClick}){
 }
 
 function SignupButton({onClick}){
-    return (<RaisedButton label="Topic"
+    return (<RaisedButton label="Question"
                           fullWidth={false}
                           secondary={true}
                           onClick={onClick}
@@ -206,24 +206,28 @@ class EditExercise extends React.Component {
         this.setState({cc: ""})
         this.setState({cd: ""})
         this.setState({value: ""})
+        this.setState({disable: true});
     };
 
 
     handleClose_2 = () => {
         console.log("CLOSEeEEEE")
         this.setState({open_2: false});
-        this.setState({topic: ""})
-        this.setState({question: ""})
-        this.setState({ca: ""})
-        this.setState({cb: ""})
-        this.setState({cc: ""})
-        this.setState({cd: ""})
-        this.setState({value: ""})
+        this.setState({topic: null})
+        this.setState({question: null})
+        this.setState({ca: null})
+        this.setState({cb: null})
+        this.setState({cc: null})
+        this.setState({cd: null})
+        this.setState({value: null})
+        this.setState({disable: true});
     };
 
     handleClose = () => {
         // this.setState({wantdelete: ""})
         this.setState({open: false});
+        console.log("HIIII")
+
         // console.log(this.state.wantdelete)
     };
 
@@ -371,7 +375,12 @@ class EditExercise extends React.Component {
         this.setState({cd: j.target.value}, () => this.checkButtonDisable());
     };
 
-    handleChange = (event, index, value) => this.setState({value});
+    // handleChange = (event, index, value) => this.setState({value});
+
+    handleChange = (event, index, value) => {
+        this.setState({value}, () => this.checkButtonDisable());
+        console.log(this.state.value)
+    };
 
     // checkButtonDisable = () => {
     //     if (this.state.name != "" && this.state.price != "" && this.state.file != "") {
@@ -564,7 +573,7 @@ class EditExercise extends React.Component {
                             <BackIcon/>
                         </IconButton>}
                     iconElementRight={<RaisedButton
-                        label="Add"
+                        label="Add New Question"
                         primary={true}
                         icon={<Foradd />}
                         onClick={this.handleOpen_3}
@@ -722,7 +731,7 @@ class EditExercise extends React.Component {
                 {/*-----------------------------------------------------------------*/}
 
                 <Dialog
-                    title="Add new Question"
+                    title="Add New Question"
                     modal={true}
                     open={this.state.open_3}
                     actions={actions_3}

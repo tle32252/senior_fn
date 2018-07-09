@@ -2,8 +2,6 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
-import Forvid from 'material-ui/svg-icons/action/done';
-
 
 
 import {
@@ -11,6 +9,8 @@ import {
     Stepper,
     StepLabel,
 } from 'material-ui/Stepper';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import MenuItem from 'material-ui/MenuItem';
@@ -29,7 +29,7 @@ import {
 function Bar({onClick}) {
     return(
         <AppBar
-            title="List of Students"
+            title="Exercise That Has Been done"
             iconElementLeft={
                 <IconButton onClick={onClick}>
                     <BackIcon/>
@@ -40,16 +40,15 @@ function Bar({onClick}) {
 }
 
 function LoginButton({onClick}){
-    return (<RaisedButton label="Exercises"
+    return (<RaisedButton label="Redo"
                           fullWidth={false}
-                          secondary={true}
+                          primary={true}
                           onClick={onClick}
-                          icon={<Forvid />}
     />)
 }
 
 
-class AdminListOfStudent extends React.Component {
+class StudentDoneExercise extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -72,20 +71,33 @@ class AdminListOfStudent extends React.Component {
         axios.get(`/user/whoami`)
             .then((response) => {
                 // console.log("this is check")
+                axios.get(`/user/check_paid_2?username=${response.data}`)
+                    .then((response) => {
+                        console.log("True")
+
+                    })
+                    .catch((error) => {
+                        console.log("False")
+                        console.log(error)
+                        this.props.history.push('/mainstudentunpaid')
+                    })
+
                 console.log(response)
                 console.log(response.data);
 
-                if(response.data === "admin"){
-                    console.log("this is admin id")
-                    this.setState({role: response.data})
-                    this.setState({iam: response.data})
-                    console.log(this.state.role)
-                    console.log(this.state.iam)
-                    this.fetchData();
-                }
-                else {
-                    this.props.history.push('/')
-                }
+                console.log("this is for student")
+                this.setState({role: response.data})
+                this.setState({iam: response.data})
+                console.log(this.state.role)
+                console.log(this.state.iam)
+                this.fetchData()
+
+                // if(response.data === "admin"){
+                //
+                // }
+                // else {
+                //     this.props.history.push('/')
+                // }
 
 
             })
@@ -93,6 +105,21 @@ class AdminListOfStudent extends React.Component {
                 console.log(error)
                 this.props.history.push('/')
             })
+        // axios.get(`/user/whoami`)
+        //     .then((response) => {
+        //         console.log("this is check")
+        //         console.log(response.data);
+        //         if(response.data === "table"){
+        //             this.props.history.push('/menu')
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //         this.props.history.push('/')
+        // console.log("tle");
+        //     });
+
+        // this.interval = setInterval(this.fetchData, 5000);
     }
 
     componentWillUnmount = () =>{
@@ -114,16 +141,29 @@ class AdminListOfStudent extends React.Component {
         this.setState({
             globalState: data,
         })
-        localStorage.setItem('ChooseViewExercise', data);
-        this.props.history.push('/admin_view_each_student')
+        localStorage.setItem('Choose', data);
+        this.props.history.push('/StudentDoExercise')
     }
+
+    handleOpen_3 = () => {
+        this.setState({open_3: true});
+    };
+
+    handleClose_3 = () => {
+        this.setState({open_3: false});
+        this.props.history.push('/mainstudent')
+
+    };
 
     fetchData = () => {
         console.log("fetch")
-        axios.get("/user/all_student")
+        axios.get(`/each_done?username=${this.state.iam}`)
             .then((response) => {
                 this.setState({data: response.data})
                 console.log(this.state.data)
+                if (response.data.length == 0){
+                    this.handleOpen_3()
+                }
                 // this.state.data.map((each) => {
                 //         console.log(each.id);
                 //     }
@@ -143,23 +183,27 @@ class AdminListOfStudent extends React.Component {
 
     render(){
         const {data, showCheckboxes} = this.state
+        const actions_3 = [
+            <FlatButton
+                label="Close"
+                secondary={true}
+                onClick={this.handleClose_3}
+            />,
+        ];
         return (
             <div >
 
-                <Bar onClick={()=>this.props.history.push('/mainmenuadmin')}/>
+                <Bar onClick={()=>this.props.history.push('/mainstudent')}/>
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
 
                         <TableRow>
                             {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            {/*<TableHeaderColumn>Button</TableHeaderColumn>*/}
-                            <TableHeaderColumn>Line</TableHeaderColumn>
-                            <TableHeaderColumn>Email</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                            <TableHeaderColumn>Progress</TableHeaderColumn>
-                            {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
+                            <TableHeaderColumn>Exercise</TableHeaderColumn>
+                            <TableHeaderColumn>Score</TableHeaderColumn>
+                            <TableHeaderColumn>OutOf</TableHeaderColumn>
+                            <TableHeaderColumn>Action</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
 
@@ -171,24 +215,20 @@ class AdminListOfStudent extends React.Component {
 
                                 <TableRow>
                                     {/*<TableRowColumn>{each.value}</TableRowColumn>*/}
-                                    <TableRowColumn>{each.name}</TableRowColumn>
-                                    <TableRowColumn>{each.line}</TableRowColumn>
-                                    <TableRowColumn>{each.email}</TableRowColumn>
-                                    <TableRowColumn>{each.status}</TableRowColumn>
+                                    <TableRowColumn>{each.exercise}</TableRowColumn>
+                                    <TableRowColumn>{each.score}</TableRowColumn>
+                                    <TableRowColumn>{each.outof}</TableRowColumn>
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
-                                        {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
-                                        {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.username)}/>
-
-                                        {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
-                                        {/*/>*/}
+                                        {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*/}
+                                        <LoginButton onClick={() => this.globalStateHandler(each.exercise)}/>
                                         {/*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*/}
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     </TableRowColumn>
                                     {/*<TableRowColumn>*/}
                                         {/*/!* {<DropDownMenuOpenImmediateExample />} *!/*/}
-                                        {/*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.name)} />*/}
+                                        {/*/!*<MenuItem  primaryText="Do this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.topic)} />*!/*/}
+                                        {/*<LoginButton onClick={() => this.globalStateHandler(each.topic)}/>*/}
                                         {/*/!*<MenuItem  primaryText="Cooking" onClick={() => this.updateItemStatus(each.key.id, "Cooking")}/>*!/*/}
                                         {/*/!*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*!/*/}
                                     {/*</TableRowColumn>*/}
@@ -204,9 +244,19 @@ class AdminListOfStudent extends React.Component {
                     </TableBody>
                 </Table>
 
+                <Dialog
+                    title="You didn't do any exercise yet."
+                    actions={actions_3}
+                    modal={false}
+                    open={this.state.open_3}
+                    onRequestClose={this.handleClose}
+                >
+                    {/*Are you sure to delete all the questions that belong to this topic?*/}
+                </Dialog>
+
             </div>
         )
     }
 }
 
-export default AdminListOfStudent;
+export default StudentDoneExercise;

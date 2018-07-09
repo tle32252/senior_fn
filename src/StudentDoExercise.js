@@ -66,6 +66,7 @@ class StudentChooseExercise extends React.Component {
             ans: {},
             ans2: [],
             eiei: String(localStorage.getItem("Choose")),
+            eiei_2: String(localStorage.getItem("ChooseId")),
             score:"",
             iam: "",
             role: "",
@@ -83,6 +84,18 @@ class StudentChooseExercise extends React.Component {
         axios.get(`/user/whoami`)
             .then((response) => {
                 // console.log("this is check")
+
+                axios.get(`/user/check_paid_2?username=${response.data}`)
+                    .then((response) => {
+                        console.log("True")
+
+                    })
+                    .catch((error) => {
+                        console.log("False")
+                        console.log(error)
+                        this.props.history.push('/mainstudentunpaid')
+                    })
+
                 console.log(response)
                 console.log(response.data);
 
@@ -148,10 +161,12 @@ class StudentChooseExercise extends React.Component {
 
     fetchData = () => {
         // console.log("fetch")
+        console.log(this.state.eiei)
         axios.get(`/each_topic?topic=${this.state.eiei}`)
             .then((response) => {
                 this.setState({data: response.data})
-                // console.log(this.state.data)
+                console.log(this.state.data)
+                this.setState({fullscore: response.data.length})
                 // this.state.data.map((each) => {
                 //         console.log(each.id);
                 //     }
@@ -185,6 +200,18 @@ class StudentChooseExercise extends React.Component {
                 console.log(response)
                 this.setState({score: response.data})
                 console.log(this.state.score)
+                axios.post(`/upload_done?username=${this.state.iam}&exercise=${this.state.eiei_2}&score=${this.state.score}&outof=${this.state.fullscore}`)
+                console.log(this.state.iam)
+                console.log(this.state.eiei)
+                console.log(this.state.score)
+                console.log(this.state.fullscore)
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
 
             })
             .catch((error) => {
@@ -202,7 +229,7 @@ class StudentChooseExercise extends React.Component {
         const actions = [
             <FlatButton
                 label="Close"
-                primary={true}
+                secondary={true}
                 onClick={this.handleClose}
             />,
 
@@ -230,27 +257,34 @@ class StudentChooseExercise extends React.Component {
 
                             return(
                                 <div>
-                                    <h3 >{each.question}</h3>
-                                    <RadioButtonGroup name="shipSpeed">
+                                    <h3 >{each.question} </h3>
+                                    <RadioButtonGroup
+                                        name="shipSpeed"
+                                        // style={{marginLeft:"40px"}}
+                                    >
                                         <RadioButton
                                             value="light"
                                             label={each.choiceA}
                                             onClick={() => this.handleAddAns(each.id, "Choice A")}
+                                            style={{marginLeft:"40px"}}
                                         />
                                         <RadioButton
                                             value="not_light"
                                             label={each.choiceB}
                                             onClick={() => this.handleAddAns(each.id, "Choice B")}
+                                            style={{marginLeft:"40px"}}
                                         />
                                         <RadioButton
                                             value="ludicrous"
                                             label={each.choiceC}
                                             onClick={() => this.handleAddAns(each.id, "Choice C")}
+                                            style={{marginLeft:"40px"}}
                                         />
                                         <RadioButton
                                             value="ludicroussss"
                                             label={each.choiceD}
                                             onClick={() => this.handleAddAns(each.id, "Choice D")}
+                                            style={{marginLeft:"40px"}}
                                         />
                                     </RadioButtonGroup>
                                 </div>
@@ -267,13 +301,13 @@ class StudentChooseExercise extends React.Component {
                 <div>
                     <div>
 
-                        <RaisedButton label="Submit" secondary={true}  onClick={this.click} />
+                        <RaisedButton label="Submit" secondary={true}  onClick={this.click}  style={{marginTop:"40px", marginButtom:"40px"}} />
                     </div>
 
                 </div>
 
                 <Dialog
-                    title={`You have scored ${this.state.score} marks`}
+                    title={`You have scored ${this.state.score}/${this.state.fullscore}.`}
                     actions={actions}
                     modal={false}
                     open={this.state.open}

@@ -95,7 +95,7 @@ function Bar({onClick}) {
                     <BackIcon/>
                 </IconButton>}
             iconElementRight={<RaisedButton
-                label="Add"
+                label="Add new topic"
                 primary={true}
                 icon={<Foradd />}
                 // onClick={handleOpen_2}
@@ -340,7 +340,7 @@ class AdminListOfExercise extends React.Component {
             />,
             <FlatButton
                 label="Submit"
-                primary={true}
+                secondary={true}
                 // keyboardFocused={true}
                 onClick={this.handleSubmit}
             />,
@@ -377,11 +377,11 @@ class AdminListOfExercise extends React.Component {
                 <AppBar
                     title="Exercise Lists"
                     iconElementLeft={
-                        <IconButton onClick={()=>this.props.history.push('/admin_manage_exercise')}>
+                        <IconButton onClick={()=>this.props.history.push('/mainmenuadmin')}>
                             <BackIcon/>
                         </IconButton>}
                     iconElementRight={<RaisedButton
-                        label="Add"
+                        label="Add new exercise"
                         primary={true}
                         icon={<Foradd />}
                         onClick={this.handleOpen_2}
@@ -534,7 +534,7 @@ class AdminListOfExercise extends React.Component {
                     actions={actions_3}
                     modal={false}
                     open={this.state.open_3}
-                    onRequestClose={this.handleClose}
+                    onRequestClose={this.handleClose_3}
                 >
                     {/*Are you sure to delete all the questions that belong to this topic?*/}
                 </Dialog>

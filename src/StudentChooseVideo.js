@@ -3,6 +3,7 @@ import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
 import Forvid from 'material-ui/svg-icons/notification/ondemand-video';
+import MoneyIcon from 'material-ui/svg-icons/editor/monetization-on';
 
 
 
@@ -39,6 +40,23 @@ function Bar({onClick}) {
     );
 }
 
+var delayInMilliseconds = 1000; //1 second
+
+// setTimeout(function eiei() {
+//     this.props.history.push('/hls_page')
+// }, delayInMilliseconds);
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+    console.log('Taking a break...');
+    await sleep(1000);
+    console.log('Two second later');
+
+}
+
 function LoginButton({onClick}){
     return (<RaisedButton label="Watch this"
                           fullWidth={false}
@@ -67,10 +85,32 @@ class StudentChooseVideo extends React.Component {
         this.fetchData();
     }
 
+    // sleep = (ms) => {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    // }
+    //
+    // async demo() {
+    //     console.log('Taking a break...');
+    //     await sleep(1000);
+    //     console.log('Two second later');
+    //     // this.history.push('/hls_page');
+    // }
+
     componentDidMount(){
         axios.get(`/user/whoami`)
             .then((response) => {
                 // console.log("this is check")
+                axios.get(`/user/check_paid_2?username=${response.data}`)
+                    .then((response) => {
+                        console.log("True")
+
+                    })
+                    .catch((error) => {
+                        console.log("False")
+                        console.log(error)
+                        this.props.history.push('/mainstudentunpaid')
+                    })
+
                 console.log(response)
                 console.log(response.data);
 
@@ -118,18 +158,7 @@ class StudentChooseVideo extends React.Component {
         clearInterval(this.interval);
     }
 
-    makeJwt = (data) => {
-        // /user/make_jwt?username=tle&video=asdsad
-        axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
-            .then((response) => {
-                console.log(response.data)
-                localStorage.setItem('Jwt', response.data);
 
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
 
     fetchData = () => {
         console.log("fetch")
@@ -137,6 +166,38 @@ class StudentChooseVideo extends React.Component {
             .then((response) => {
                 this.setState({data: response.data})
                 console.log(this.state.data)
+                this.setState({dataLength: response.data.length})
+                axios.get(`/each_videodone?username=${this.state.iam}`)
+                    .then((response) => {
+                        this.setState({data_2: response.data})
+                        console.log(this.state.data_2)
+                        this.setState({dataLength_2: response.data.length})
+
+                        for (var i = 0; i < this.state.dataLength; i++) {
+                            // console.log(this.state.data[i].id)
+                            for (var j = 0; j < this.state.dataLength_2; j++) {
+                                if (this.state.data[i].topic == this.state.data_2[j].video){
+                                    console.log("yess")
+                                    this.state.data[i].watch = "watch laew"
+                                    // this.state.data[i].outof = this.state.data_2[j].outof
+
+                                }
+                                // else {
+                                //     console.log("nooo")
+                                //     this.state.data[i].score = "-"
+                                //     this.state.data[i].outof = "-"
+                                // }
+                            }
+                        }
+                        console.log(this.state.data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
+
+
+
                 // this.state.data.map((each) => {
                 //         console.log(each.id);
                 //     }
@@ -154,16 +215,59 @@ class StudentChooseVideo extends React.Component {
         })
     };
 
-    globalStateHandler = (data) => {
+    makeJwt = (data) => {
+        // /user/make_jwt?username=tle&video=asdsad
+        axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
+            .then((response) => {
+                console.log(response.data)
+                localStorage.setItem('Jwt', response.data);
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    globalStateHandler = (data,data2) => {
         // perhaps some processing...
-        this.makeJwt(data);
+        axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
+            .then((response) => {
+                console.log(response.data)
+                localStorage.setItem('Jwt', response.data);
+                console.log("set jwt")
+                axios.post(`/upload_videodone?username=${this.state.iam}&video=${data2}`)
+                    .then((response) => {
+                        console.log("im heree")
+                        console.log(response.data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+
 
         this.setState({
             globalState: data,
         })
         localStorage.setItem('ChooseWatch', data);
-        this.props.history.push('/hls_page')
+        // demo();
+        console.log("be 4 tiimeout");
+        setTimeout(this.go, 200);
+        console.log("after timeout");
+
+        // this.props.history.push('/hls_page');
+
+    };
+
+    go =() =>{
+        this.props.history.push('/hls_page');
     }
+
 
     render(){
         const {data, showCheckboxes} = this.state
@@ -179,6 +283,7 @@ class StudentChooseVideo extends React.Component {
                         <TableRow>
                             <TableHeaderColumn>Topic</TableHeaderColumn>
                             <TableHeaderColumn>Description</TableHeaderColumn>
+                            <TableHeaderColumn>Icon</TableHeaderColumn>
                             <TableHeaderColumn>Action</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
                         </TableRow>
@@ -202,12 +307,17 @@ class StudentChooseVideo extends React.Component {
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     {/*</TableRowColumn>*/}
                                     {/*<TableRowColumn>{each.id}</TableRowColumn>*/}
+                                    <TableRowColumn> <Forvid
+                                        color={"green"}
+                                        // viewBox={'0 0 24 24'}
+                                    />
+                                    </TableRowColumn>
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.url)}/>
+                                        <LoginButton onClick={() => this.globalStateHandler(each.url, each.topic)}/>
 
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
                                         {/*/>*/}

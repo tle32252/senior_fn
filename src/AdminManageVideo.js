@@ -29,6 +29,8 @@ import Checkbox from 'material-ui/Checkbox';
 
 import SelectField from 'material-ui/SelectField';
 // import MenuItem from 'material-ui/MenuItem';
+import LinearProgress from 'material-ui/LinearProgress';
+
 
 function Bar({onClick, onClick_2}) {
     return(
@@ -87,6 +89,8 @@ class AdminManageVideo extends Component {
             role: "",
             iam: "",
             open: false,
+            open_3: false,
+            progress: 0,
         };
     }
 
@@ -101,6 +105,7 @@ class AdminManageVideo extends Component {
                     this.setState({iam: response.data})
                     console.log(this.state.role)
                     console.log(this.state.iam)
+                    this.checkButtonDisable();
                     // this.props.history.push('/menu')
                 }
                 else {
@@ -119,6 +124,7 @@ class AdminManageVideo extends Component {
 
     handleClose = () => {
         this.setState({open: false});
+
     };
 
     handleImageChange = (e) => {
@@ -135,6 +141,8 @@ class AdminManageVideo extends Component {
 
         reader.readAsDataURL(file)
     };
+
+
 
     upload(files) {
         const config = {
@@ -160,15 +168,28 @@ class AdminManageVideo extends Component {
         data.append('topic', this.state.name);
         data.append('description', this.state.description);
         data.append('file', this.state.file);
+        this.setState({open: false});
+
+        let config = {
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                console.log(percentCompleted)
+                this.setState({progress: percentCompleted});
+                // do whatever you like with the percentage complete
+                // maybe dispatch an action that will update a progress bar or something
+            }
+        }
 
         // console.log(data);
-        axios.post("/video/upload", data)
+        axios.post("/video/upload", data,config)
             .then((response) => {
-                this.setState({open: false});
+                this.setState({open_3: true});
                 this.setState({name: ""});
                 this.setState({description: ""});
                 this.setState({file: ""});
                 console.log(response);
+                console.log("complete");
+
             })
             .catch((error) => {
                 console.log(error)
@@ -184,7 +205,7 @@ class AdminManageVideo extends Component {
     };
 
     checkButtonDisable = () => {
-        if (this.state.name != "" && this.state.price != "" && this.state.file != "") {
+        if (this.state.name != null && this.state.description != null && this.state.file != null) {
             this.setState({disable: false})
         }
         else{
@@ -192,9 +213,29 @@ class AdminManageVideo extends Component {
         }
     };
 
+    handleOpen_3 = () => {
+        this.setState({open_3: true});
+    };
+
+    handleClose_3 = () => {
+        this.setState({open_3: false});
+        this.setState({progress: 0});
+        // window.location.reload();
+    };
+
     handleChange = (event, index, value) => this.setState({value});
 
     render() {
+        const actions_3 = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={this.handleClose_3}
+            />,
+
+        ];
+
+
         const actions = [
             <FlatButton
                 label="Cancel"
@@ -253,7 +294,7 @@ class AdminManageVideo extends Component {
                     <List>
                         <ListItem primaryText="Upload New Video" leftIcon={<ForTable />} onClick={this.handleOpen}/>
                         {/*<ListItem primaryText="Create New Question With 'Existed Topic'" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_manage_exercise')}/>*/}
-                        <ListItem primaryText="List of Videos" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>
+                        <ListItem primaryText="List of Videos" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_video')}/>
                         {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
                         {/*<ListItem primaryText="Menu Management"*/}
                         {/*leftIcon={<AddMenu />}*/}
@@ -362,6 +403,17 @@ class AdminManageVideo extends Component {
                     {/*<MenuItem value={2} primaryText="Dessert" />*/}
                     {/*</DropDownMenu>*/}
                 </Dialog>
+                <Dialog
+                    title="Successfully Added"
+                    actions={actions_3}
+                    modal={false}
+                    open={this.state.open_3}
+                    onRequestClose={this.handleClose}
+                >
+                    {/*Are you sure to delete all the questions that belong to this topic?*/}
+                </Dialog>
+
+                <LinearProgress mode="determinate" color={"#E9F800"} value={this.state.progress} open={false} style={{Color:"#D25FDB",}} />
             </div>
         );
     }
