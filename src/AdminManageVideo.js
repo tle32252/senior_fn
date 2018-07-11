@@ -302,25 +302,31 @@ class AdminManageVideo extends Component {
                 {/*/>}*/}
 
                 {/*/>*/}
-                <div class="center">
-                    <h4 style={{textAlign: "center"}}> MANAGE VIDEOS </h4>
-                    <List>
-                        <ListItem primaryText="Upload New Video" leftIcon={<ForTable />} onClick={this.handleOpen}/>
-                        {/*<ListItem primaryText="Create New Question With 'Existed Topic'" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_manage_exercise')}/>*/}
-                        <ListItem primaryText="List of Videos" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_video')}/>
-                        {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
-                        {/*<ListItem primaryText="Menu Management"*/}
-                        {/*leftIcon={<AddMenu />}*/}
-                        {/*disabled={this.state.role === "staff"}*/}
-                        {/*onClick={()=>this.props.history.push('/manage')}*/}
-                        {/*/>*/}
-                        {/*<ListItem primaryText="Sale Report"*/}
-                        {/*leftIcon={<Chart />}*/}
-                        {/*disabled={this.state.role === "staff"}*/}
-                        {/*onClick={()=>this.props.history.push('/saleReport')}*/}
-                        {/*/>*/}
-                    </List>
-                </div>
+
+                {/*<div className="W5-animate-bottom-text">*/}
+                    <div className="center">
+                        <h4 style={{textAlign: "center"}}> MANAGE VIDEOS </h4>
+                        <List>
+                            <ListItem primaryText="Upload New Video" leftIcon={<ForTable/>} onClick={this.handleOpen}/>
+                            {/*<ListItem primaryText="Create New Question With 'Existed Topic'" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_manage_exercise')}/>*/}
+                            <ListItem primaryText="List of Videos" leftIcon={<Fordessertkit/>}
+                                      onClick={() => this.props.history.push('/admin_list_of_video')}/>
+                            {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
+                            {/*<ListItem primaryText="Menu Management"*/}
+                            {/*leftIcon={<AddMenu />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/manage')}*/}
+                            {/*/>*/}
+                            {/*<ListItem primaryText="Sale Report"*/}
+                            {/*leftIcon={<Chart />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/saleReport')}*/}
+                            {/*/>*/}
+                        </List>
+                    </div>
+
+                {/*</div>*/}
+
                 <Dialog
                     title="Upload New Video."
                     modal={true}

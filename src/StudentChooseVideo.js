@@ -60,8 +60,9 @@ async function demo() {
 function LoginButton({onClick}){
     return (<RaisedButton label="Watch this"
                           fullWidth={false}
-                          primary={true}
+                          // primary={true}
                           onClick={onClick}
+                          buttonStyle={{backgroundColor:"#DABD97"}}
                           icon={<Forvid />}
     />)
 }

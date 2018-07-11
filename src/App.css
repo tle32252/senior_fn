@@ -78,7 +78,7 @@ body{
     margin: 0px;
     padding-top: 200px;
     /*position:relative;*/
-    animation:animatebottom 3s
+    animation:animatebottom 2s
 }
 
 @keyframes animatebottom{

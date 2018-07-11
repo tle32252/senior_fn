@@ -270,30 +270,33 @@ class MainStudent extends Component {
                         style={{marginTop:"5px"}}
                     />}
                 />
-                <div class="center">
-                    <h4> PLEASE CHOOSE YOUR ACTION </h4>
-                    <List>
-                        <ListItem primaryText="Videos" leftIcon={<ForTable />}  onClick={()=>this.props.history.push('/student_choose_video')}/>
-                        <ListItem primaryText="Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/student_choose_exercise')}/>
-                        {/*<ListItem primaryText="Done Exercises" leftIcon={<ForDone />} onClick={()=>this.props.history.push('/student_done')}/>*/}
-                        {/*<ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
+                <div className="W5-animate-bottom-text" >
+                    <div className="center">
+                        <h4> PLEASE CHOOSE YOUR ACTION </h4>
+                        <List>
+                            <ListItem primaryText="Videos" leftIcon={<ForTable/>}
+                                      onClick={() => this.props.history.push('/student_choose_video')}/>
+                            <ListItem primaryText="Exercises" leftIcon={<ForKit/>}
+                                      onClick={() => this.props.history.push('/student_choose_exercise')}/>
+                            {/*<ListItem primaryText="Done Exercises" leftIcon={<ForDone />} onClick={()=>this.props.history.push('/student_done')}/>*/}
+                            {/*<ListItem primaryText="Course Details" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
 
 
-                        {/*<ListItem primaryText="Pay The Course"  disabled={false}  leftIcon={<Formoney />} type="submit" value="Pay The Course." id="checkout-button"/>*/}
-                        {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
-                        {/*<ListItem primaryText="Menu Management"*/}
-                        {/*leftIcon={<AddMenu />}*/}
-                        {/*disabled={this.state.role === "staff"}*/}
-                        {/*onClick={()=>this.props.history.push('/manage')}*/}
-                        {/*/>*/}
-                        {/*<ListItem primaryText="Sale Report"*/}
-                        {/*leftIcon={<Chart />}*/}
-                        {/*disabled={this.state.role === "staff"}*/}
-                        {/*onClick={()=>this.props.history.push('/saleReport')}*/}
-                        {/*/>*/}
+                            {/*<ListItem primaryText="Pay The Course"  disabled={false}  leftIcon={<Formoney />} type="submit" value="Pay The Course." id="checkout-button"/>*/}
+                            {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
+                            {/*<ListItem primaryText="Menu Management"*/}
+                            {/*leftIcon={<AddMenu />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/manage')}*/}
+                            {/*/>*/}
+                            {/*<ListItem primaryText="Sale Report"*/}
+                            {/*leftIcon={<Chart />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/saleReport')}*/}
+                            {/*/>*/}
 
 
-                        {/*<form*/}
+                            {/*<form*/}
                             {/*onSubmit = {(e) => this.onSubmit(e)}*/}
                             {/*id="checkout-form"*/}
                             {/*name="checkoutForm"*/}
@@ -301,24 +304,26 @@ class MainStudent extends Component {
 
                             {/*action="http://localhost:8080/user/omiseCharge"  >*/}
                             {/*<ListItem*/}
-                                {/*hidden={true}*/}
-                                {/*primaryText="Pay The Course"*/}
-                                {/*disabled={false}*/}
-                                {/*leftIcon={<Formoney/>}*/}
-                                {/*type="submit"*/}
-                                {/*value="Pay The Course."*/}
-                                {/*id="checkout-button" />*/}
-                        {/*</form>*/}
+                            {/*hidden={true}*/}
+                            {/*primaryText="Pay The Course"*/}
+                            {/*disabled={false}*/}
+                            {/*leftIcon={<Formoney/>}*/}
+                            {/*type="submit"*/}
+                            {/*value="Pay The Course."*/}
+                            {/*id="checkout-button" />*/}
+                            {/*</form>*/}
 
 
-                        {/*<form name="checkoutForm" method="POST" action="checkout.php" >*/}
+                            {/*<form name="checkoutForm" method="POST" action="checkout.php" >*/}
                             {/*<input type="submit" disabled value="Pasdyyy" id="checkout-button"/>*/}
-                        {/*</form>*/}
+                            {/*</form>*/}
 
 
+                        </List>
+                    </div>
 
-                    </List>
                 </div>
+
 
                 <Dialog
                     title="Payment Success "

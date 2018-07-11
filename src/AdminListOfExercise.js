@@ -185,6 +185,7 @@ class AdminListOfExercise extends React.Component {
                     console.log("this is admin id")
                     this.setState({role: response.data})
                     this.setState({iam: response.data})
+                    this.setState({rank: 1})
                     console.log(this.state.role)
                     console.log(this.state.iam)
                     this.fetchData()
@@ -223,6 +224,7 @@ class AdminListOfExercise extends React.Component {
         var data = {
             topic: this.state.topic,
             question: this.state.question,
+            rank: this.state.rank,
             choiceA: this.state.ca,
             choiceB: this.state.cb,
             choiceC: this.state.cc,
@@ -245,6 +247,7 @@ class AdminListOfExercise extends React.Component {
 
         this.setState({topic: ""});
         this.setState({question: ""});
+        this.setState({rank: ""});
         this.setState({ca: ""});
         this.setState({cb: ""});
         this.setState({cc: ""});
@@ -277,6 +280,10 @@ class AdminListOfExercise extends React.Component {
         this.setState({question: f.target.value}, () => this.checkButtonDisable());
         console.log(this.state.question)
     };
+    updateRank = (z) => {
+        this.setState({rank: z.target.value}, () => this.checkButtonDisable());
+        console.log(this.state.rank)
+    };
 
     updateChoiceA = (g) => {
         this.setState({ca: g.target.value}, () => this.checkButtonDisable());
@@ -299,7 +306,7 @@ class AdminListOfExercise extends React.Component {
     };
 
     checkButtonDisable = () => {
-        if (this.state.topic != null && this.state.question != null && this.state.ca != null && this.state.cb != null && this.state.cc != null && this.state.cd != null && this.state.value != null) {
+        if (this.state.topic != null && this.state.question != null && this.state.rank != null && this.state.ca != null && this.state.cb != null && this.state.cc != null && this.state.cd != null && this.state.value != null) {
             console.log("False")
             this.setState({disable: false})
         }
@@ -443,6 +450,7 @@ class AdminListOfExercise extends React.Component {
 
                     </TableBody>
                 </Table>
+
                 <Dialog
                     title="Confirm Delete , This Action Can't be Undone !!"
                     actions={actions}
@@ -477,6 +485,15 @@ class AdminListOfExercise extends React.Component {
                         floatingLabelText="Question"
                         value={this.state.question}
                         onChange={(f)=> this.updateQuestion(f)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Rank"
+                        value={this.state.rank}
+                        onChange={(f)=> this.updateRank(f)}
                         underlineFocusStyle={styles.underlineStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     />

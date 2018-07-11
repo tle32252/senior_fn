@@ -45,8 +45,8 @@ function Bar({onClick}) {
 function LoginButton({onClick}){
     return (<RaisedButton label="Delete this"
                           fullWidth={false}
-                          secondary={true}
-
+                          // secondary={true}
+                          buttonStyle={{backgroundColor:"#DABD97"}}
                           onClick={onClick}
                           icon={<Forvid />}
     />)

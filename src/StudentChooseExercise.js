@@ -42,8 +42,9 @@ function Bar({onClick}) {
 function LoginButton({onClick}){
     return (<RaisedButton label="Do this"
                           fullWidth={false}
-                          primary={true}
+                          // primary={true}
                           onClick={onClick}
+                          buttonStyle={{backgroundColor:"#DABD97"}}
     />)
 }
 

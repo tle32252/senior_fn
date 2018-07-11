@@ -166,6 +166,7 @@ class EditExercise extends React.Component {
                 console.log(response.data)
                 this.setState({topic: response.data.topic});
                 this.setState({question: response.data.question});
+                this.setState({rank: response.data.rank});
                 this.setState({ca: response.data.choiceA});
                 this.setState({cb: response.data.choiceB});
                 this.setState({cc: response.data.choiceC});
@@ -353,6 +354,11 @@ class EditExercise extends React.Component {
         this.setState({topic: e.target.value}, () => this.checkButtonDisable());
     };
 
+    updateRank = (z) => {
+        this.setState({rank: z.target.value}, () => this.checkButtonDisable());
+        console.log(this.state.rank)
+    };
+
     updateQuestion = (f) => {
         this.setState({question: f.target.value}, () => this.checkButtonDisable());
     };
@@ -427,6 +433,7 @@ class EditExercise extends React.Component {
         var data = {
             topic: this.state.topic,
             question: this.state.question,
+            rank: this.state.rank,
             choiceA: this.state.ca,
             choiceB: this.state.cb,
             choiceC: this.state.cc,
@@ -452,6 +459,7 @@ class EditExercise extends React.Component {
 
         this.setState({topic: ""})
         this.setState({question: ""})
+        this.setState({rank: ""})
         this.setState({ca: ""})
         this.setState({cb: ""})
         this.setState({cc: ""})
@@ -464,6 +472,7 @@ class EditExercise extends React.Component {
         var data = {
             topic: this.state.topic,
             question: this.state.question,
+            rank: this.state.rank,
             choiceA: this.state.ca,
             choiceB: this.state.cb,
             choiceC: this.state.cc,
@@ -487,6 +496,7 @@ class EditExercise extends React.Component {
 
         this.setState({topic: ""});
         this.setState({question: ""});
+        this.setState({rank: ""});
         this.setState({ca: ""});
         this.setState({cb: ""});
         this.setState({cc: ""});
@@ -589,6 +599,7 @@ class EditExercise extends React.Component {
                         <TableRow>
                             {/*<TableHeaderColumn>Table Number</TableHeaderColumn>*/}
                             <TableHeaderColumn >Name</TableHeaderColumn>
+                            <TableHeaderColumn >Rank</TableHeaderColumn>
                             <TableHeaderColumn >Edit</TableHeaderColumn>
                             <TableHeaderColumn>Delete</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
@@ -604,6 +615,7 @@ class EditExercise extends React.Component {
                                 <TableRow>
                                     {/*<TableRowColumn>{each.value}</TableRowColumn>*/}
                                     <TableRowColumn>{each.question}</TableRowColumn>
+                                    <TableRowColumn>{each.rank}</TableRowColumn>
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
@@ -668,6 +680,16 @@ class EditExercise extends React.Component {
                         floatingLabelText="Question"
                         value={this.state.question}
                         onChange={(f)=> this.updateQuestion(f)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Rank"
+                        value={this.state.rank}
+                        onChange={(f)=> this.updateRank(f)}
                         underlineFocusStyle={styles.underlineStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     />
@@ -754,6 +776,16 @@ class EditExercise extends React.Component {
                         floatingLabelText="Question"
                         value={this.state.question}
                         onChange={(f)=> this.updateQuestion(f)}
+                        underlineFocusStyle={styles.underlineStyle}
+                        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
+                    <br />
+
+                    <TextField
+                        style={{marginLeft:"20px"}}
+                        floatingLabelText="Rank"
+                        value={this.state.rank}
+                        onChange={(f)=> this.updateRank(f)}
                         underlineFocusStyle={styles.underlineStyle}
                         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                     />

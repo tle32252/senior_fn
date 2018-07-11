@@ -88,27 +88,34 @@ class MainMenuAdmin extends Component {
                         style={{marginTop:"5px"}}
                     />}
                 />
-                <div class="center">
-                    <h4> PLEASE CHOOSE YOUR ACTION </h4>
-                    <List>
-                        <ListItem primaryText="Manage Videos" leftIcon={<ForTable />} onClick={()=>this.props.history.push('/admin_manage_video')}/>
-                        <ListItem primaryText="Manage Exercises" leftIcon={<ForKit />} onClick={()=>this.props.history.push('/admin_list_of_exercise')}/>
-                        <ListItem primaryText="List of Students" leftIcon={<Fordessertkit />} onClick={()=>this.props.history.push('/admin_list_of_students')}/>
-                        {/*<ListItem primaryText="Students Exercise Results" leftIcon={<Fordone />} onClick={()=>this.props.history.push('/all_done_exercise')}/>*/}
+                <div className="W5-animate-bottom-text">
+                    <div className="center">
+                        <h4> PLEASE CHOOSE YOUR ACTION </h4>
+                        <List>
+                            <ListItem primaryText="Manage Videos" leftIcon={<ForTable/>}
+                                      onClick={() => this.props.history.push('/admin_manage_video')}/>
+                            <ListItem primaryText="Manage Exercises" leftIcon={<ForKit/>}
+                                      onClick={() => this.props.history.push('/admin_list_of_exercise')}/>
+                            <ListItem primaryText="List of Students" leftIcon={<Fordessertkit/>}
+                                      onClick={() => this.props.history.push('/admin_list_of_students')}/>
+                            {/*<ListItem primaryText="Students Exercise Results" leftIcon={<Fordone />} onClick={()=>this.props.history.push('/all_done_exercise')}/>*/}
 
-                        {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
-                        {/*<ListItem primaryText="Menu Management"*/}
-                                  {/*leftIcon={<AddMenu />}*/}
-                                  {/*disabled={this.state.role === "staff"}*/}
-                                  {/*onClick={()=>this.props.history.push('/manage')}*/}
-                        {/*/>*/}
-                        {/*<ListItem primaryText="Sale Report"*/}
-                                  {/*leftIcon={<Chart />}*/}
-                                  {/*disabled={this.state.role === "staff"}*/}
-                                  {/*onClick={()=>this.props.history.push('/saleReport')}*/}
-                        {/*/>*/}
-                    </List>
+                            {/*<ListItem primaryText="Cashier" leftIcon={<ForCashier />} onClick={()=>this.props.history.push('/cashier')}/>*/}
+                            {/*<ListItem primaryText="Menu Management"*/}
+                            {/*leftIcon={<AddMenu />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/manage')}*/}
+                            {/*/>*/}
+                            {/*<ListItem primaryText="Sale Report"*/}
+                            {/*leftIcon={<Chart />}*/}
+                            {/*disabled={this.state.role === "staff"}*/}
+                            {/*onClick={()=>this.props.history.push('/saleReport')}*/}
+                            {/*/>*/}
+                        </List>
+                    </div>
+
                 </div>
+
             </div>
         );
     }
