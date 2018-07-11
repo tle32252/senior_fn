@@ -142,83 +142,87 @@ class App extends Component {
     render() {
         return (
             <div>
-                <div className="center">
-                    {/*<div className="cen2">*/}
-                    <h4> LOGIN TO ACCESS YOUR MAX TOEIC ACCOUNT</h4>
-                    <br/>
-                    <div style={{ display: (this.state.show ? 'block' : 'none'), color: "red" }}>Wrong username or password</div>
-                    <UsernameField
-                        onChange={this.onUsernameChange}
-                        onKeyPress={this.onEnterpress}
-                    />
-                    <br />
-                    <PasswordField
-                        onChange={this.onPasswordChange}
-                        onKeyPress={this.onEnterpress}
-                    />
-                    <br />
-                    <br />
+                <div className="W5-animate-bottom-text">
+                    <div className="center">
+                        {/*<div className="cen2">*/}
+                        <h4> LOGIN TO ACCESS YOUR MAX TOEIC ACCOUNT</h4>
+                        <br/>
+                        <div style={{ display: (this.state.show ? 'block' : 'none'), color: "red" }}>Wrong username or password</div>
+                        <UsernameField
+                            onChange={this.onUsernameChange}
+                            onKeyPress={this.onEnterpress}
+                        />
+                        <br />
+                        <PasswordField
+                            onChange={this.onPasswordChange}
+                            onKeyPress={this.onEnterpress}
+                        />
+                        <br />
+                        <br />
 
-                    <LoginButton onClick={this.sendRequest}/>
+                        <LoginButton onClick={this.sendRequest}/>
 
-                    <br />
-                    <br />
-                    <SignupButton onClick={this.sendRequest_2}/>
+                        <br />
+                        <br />
+                        <SignupButton onClick={this.sendRequest_2}/>
 
-                    {/*<form id="checkout-form" action="/checkout.php" method="POST">*/}
+                        {/*<form id="checkout-form" action="/checkout.php" method="POST">*/}
 
                         {/*<input type="hidden" name="omiseToken" />*/}
 
                         {/*<div>*/}
-                            {/*<label>Card Number</label>*/}
-                            {/*<input type="text" data-name="cardNumber" placeholder="••••••••••••••••" />*/}
+                        {/*<label>Card Number</label>*/}
+                        {/*<input type="text" data-name="cardNumber" placeholder="••••••••••••••••" />*/}
                         {/*</div>*/}
 
                         {/*<div>*/}
-                            {/*<label>Name on card</label>*/}
-                            {/*<input type="text" data-name="nameOnCard" placeholder="Full Name" />*/}
+                        {/*<label>Name on card</label>*/}
+                        {/*<input type="text" data-name="nameOnCard" placeholder="Full Name" />*/}
                         {/*</div>*/}
 
                         {/*<div>*/}
-                            {/*<label>Expiry date</label>*/}
-                            {/*<select data-name="expiryMonth">*/}
-                                {/*<option value="">MM</option>*/}
-                                {/*<option value="1">1</option>*/}
-                                {/*<option value="12">12</option>*/}
-                            {/*</select>*/}
+                        {/*<label>Expiry date</label>*/}
+                        {/*<select data-name="expiryMonth">*/}
+                        {/*<option value="">MM</option>*/}
+                        {/*<option value="1">1</option>*/}
+                        {/*<option value="12">12</option>*/}
+                        {/*</select>*/}
 
-                            {/*<select data-name="expiryYear">*/}
-                                {/*<option value="">YYYY</option>*/}
-                                {/*<option value="2017">2017</option>*/}
-                                {/*<option value="2025">2025</option>*/}
-                            {/*</select>*/}
+                        {/*<select data-name="expiryYear">*/}
+                        {/*<option value="">YYYY</option>*/}
+                        {/*<option value="2017">2017</option>*/}
+                        {/*<option value="2025">2025</option>*/}
+                        {/*</select>*/}
                         {/*</div>*/}
 
                         {/*<div>*/}
-                            {/*<label>Security code</label>*/}
-                            {/*<input type="text" data-name="securityCode" placeholder="123" />*/}
+                        {/*<label>Security code</label>*/}
+                        {/*<input type="text" data-name="securityCode" placeholder="123" />*/}
                         {/*</div>*/}
 
                         {/*<div>*/}
-                            {/*<button>Checkout</button>*/}
+                        {/*<button>Checkout</button>*/}
                         {/*</div>*/}
-                    {/*</form>*/}
+                        {/*</form>*/}
 
-                    {/*<script src="https://cdn.omise.co/omise.js"></script>*/}
+                        {/*<script src="https://cdn.omise.co/omise.js"></script>*/}
 
-                    {/*<script src="app.js"></script>*/}
-                    {/*</div>*/}
-                    {/*<form name="checkoutForm" method="POST" action="checkout.php" >*/}
+                        {/*<script src="app.js"></script>*/}
+                        {/*</div>*/}
+                        {/*<form name="checkoutForm" method="POST" action="checkout.php" >*/}
                         {/*<input type="submit" value="Pasdyyy" id="checkout-button"/>*/}
-                    {/*</form>*/}
-                    {/*<form className="checkout-form" name="checkoutForm" method="POST" action="/checkout">*/}
+                        {/*</form>*/}
+                        {/*<form className="checkout-form" name="checkoutForm" method="POST" action="/checkout">*/}
                         {/*<script type="text/javascript" src="https://cdn.omise.co/omise.js"*/}
-                                {/*data-key="YOUR_PUBLIC_KEY"*/}
-                                {/*data-amount="10025"*/}
-                                {/*data-button-label="Click to see an example">*/}
+                        {/*data-key="YOUR_PUBLIC_KEY"*/}
+                        {/*data-amount="10025"*/}
+                        {/*data-button-label="Click to see an example">*/}
                         {/*</script>*/}
-                    {/*</form>*/}
+                        {/*</form>*/}
+                    </div>
+
                 </div>
+
             </div>
         );
     }

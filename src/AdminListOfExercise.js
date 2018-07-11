@@ -57,13 +57,13 @@ const styles = {
     //   color: orange500,
     // },
     underlineStyle: {
-        borderColor: "#E53935",
+        borderColor: "#673630",
     },
     floatingLabelStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
     floatingLabelFocusStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
 };
 
@@ -335,6 +335,8 @@ class AdminListOfExercise extends React.Component {
         const actions = [
             <FlatButton
                 label="Cancel"
+
+                // backgroundColor="#F44336"
                 primary={true}
                 onClick={this.handleClose}
             />,
@@ -349,13 +351,13 @@ class AdminListOfExercise extends React.Component {
         const actions_2 = [
             <FlatButton
                 label="Cancel"
-                backgroundColor="#F44336"
+                backgroundColor="#C98134"
                 onClick={this.handleClose_2}
                 style={{float:"left"}}
             />,
             <FlatButton
                 label="Save"
-                backgroundColor="#8BC34A"
+                backgroundColor="#DABD97"
                 // disabled={true}
                 disabled={this.state.disable}
                 onClick={()=> this.makeExercise_1()}
@@ -385,9 +387,10 @@ class AdminListOfExercise extends React.Component {
                         primary={true}
                         icon={<Foradd />}
                         onClick={this.handleOpen_2}
-                        buttonStyle={{backgroundColor:"#e99833"}}
+                        buttonStyle={{backgroundColor:"#f1bf58"}}
+                        style={{marginTop:"5px"}}
                     />}
-                    style={{backgroundColor: "#D50000"}}
+                    style={{backgroundColor: "#986d51"}}
                 />
 
                 {/*<Bar onClick={()=>this.props.history.push('/admin_manage_exercise')}/>*/}
@@ -455,7 +458,7 @@ class AdminListOfExercise extends React.Component {
                     modal={true}
                     open={this.state.open_2}
                     actions={actions_2}
-                    titleStyle={{backgroundColor:"#D50000", color:"white"}}
+                    titleStyle={{backgroundColor:"#986d51", color:"white"}}
                     contentStyle={{ width: '30%',}}
                     autoScrollBodyContent={true}
                 >

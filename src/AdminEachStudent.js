@@ -146,7 +146,6 @@ class StudentDoneExercise extends React.Component {
     handleClose_3 = () => {
         this.setState({open_3: false});
         this.props.history.push('/admin_list_of_students')
-
     };
 
     iWillLoopForU = (each) => {
@@ -154,6 +153,18 @@ class StudentDoneExercise extends React.Component {
         each.map((elt) => {
             console.log(elt)
         })
+    };
+
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     };
 
     render(){
@@ -167,8 +178,23 @@ class StudentDoneExercise extends React.Component {
         ];
         return (
             <div >
+                <AppBar
+                    title="Exercise That Has Been done"
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/admin_list_of_students')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Log Out"
+                        primary={true}
+                        onClick={this.sendRequest_2}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
+                    />}
+                    style={{backgroundColor: "#986d51"}}
+                />
 
-                <Bar onClick={()=>this.props.history.push('/mainmenuadmin')}/>
+                {/*<Bar onClick={()=>this.props.history.push('/admin_list_of_students')}/>*/}
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>

@@ -28,6 +28,8 @@ import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
 import AppBar from 'material-ui/AppBar';
 import axios from "./AxiosConfiguration";
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+// import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 
 const DURATION = 60
@@ -55,6 +57,7 @@ class App extends Component {
         this.state = {
             source: String(localStorage.getItem("ChooseWatch")),
             token: String(localStorage.getItem("Jwt")),
+            description: String(localStorage.getItem("Description")),
 
         }
 
@@ -205,12 +208,38 @@ class App extends Component {
                 <Bar
                     onClick={()=>this.props.history.push('/student_choose_video')}
                     // eiei =
-                    eiei={` ${String(localStorage.getItem("ChooseWatch"))} `}
+                    eiei={` ${String(localStorage.getItem("HeaderHls"))} `}
                     // se={true}
 
                 />
+                <div style={{display: "flex", justifyContent: "center"}}>
+                    <Player {...playerOptions} />
+                </div>
+                <br/>
+                <br/>
 
-                <Player {...playerOptions} />
+                <Card>
+                    <CardHeader
+                        title="Descriptions"
+                        // subtitle="Subtitle"
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                        // color={"green"}
+                    />
+                    {/*<CardActions>*/}
+                        {/*<FlatButton label="Action1" />*/}
+                        {/*<FlatButton label="Action2" />*/}
+                    {/*</CardActions>*/}
+                    <CardText expandable={true}>
+                        {this.state.description}
+                        {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit.*/}
+                        {/*Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.*/}
+                        {/*Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.*/}
+                        {/*Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.*/}
+                    </CardText>
+                </Card>
+
+
 
                 {/*{ !readyToPlay &&*/}
                 {/*<form onSubmit={this.handlePlayButton}>*/}

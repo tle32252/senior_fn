@@ -37,7 +37,7 @@ function Bar({onClick}) {
                 <IconButton onClick={onClick}>
                     <BackIcon/>
                 </IconButton>}
-            style={{backgroundColor: "#D50000"}}
+            style={{backgroundColor: "#986d51"}}
         />
     );
 }
@@ -46,6 +46,7 @@ function LoginButton({onClick}){
     return (<RaisedButton label="Delete this"
                           fullWidth={false}
                           secondary={true}
+
                           onClick={onClick}
                           icon={<Forvid />}
     />)
@@ -173,6 +174,18 @@ class AdminListOfVideo extends React.Component {
 
     };
 
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
     handleSubmit = () => {
         console.log(this.state.wantdeletevid)
         axios.post(`/delete_video?id=${this.state.wantdeletevid}`)
@@ -211,9 +224,25 @@ class AdminListOfVideo extends React.Component {
         ];
         return (
             <div >
+                <AppBar
+                    title="Video Lists"
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/admin_manage_video')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Log Out"
+                        primary={true}
+                        onClick={this.sendRequest_2}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
+                    />}
+                    style={{backgroundColor: "#986d51"}}
+                />
 
 
-                <Bar onClick={()=>this.props.history.push('/admin_manage_video')}/>
+
+                {/*<Bar onClick={()=>this.props.history.push('/admin_manage_video')}/>*/}
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>

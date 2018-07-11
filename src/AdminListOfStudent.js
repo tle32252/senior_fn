@@ -2,7 +2,7 @@ import React from 'react';
 import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
-import Forvid from 'material-ui/svg-icons/action/done';
+import Forvid from 'material-ui/svg-icons/action/done-all';
 
 
 
@@ -34,7 +34,7 @@ function Bar({onClick}) {
                 <IconButton onClick={onClick}>
                     <BackIcon/>
                 </IconButton>}
-            style={{backgroundColor: "#D50000"}}
+            style={{backgroundColor: "#986d51"}}
         />
     );
 }
@@ -42,8 +42,10 @@ function Bar({onClick}) {
 function LoginButton({onClick}){
     return (<RaisedButton label="Exercises"
                           fullWidth={false}
-                          secondary={true}
+                          // secondary={true}
                           onClick={onClick}
+                          buttonStyle={{backgroundColor:"#DABD97"}}
+                          // style={{backgroundColor: "#986d51"}}
                           icon={<Forvid />}
     />)
 }
@@ -141,12 +143,40 @@ class AdminListOfStudent extends React.Component {
         })
     };
 
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
     render(){
         const {data, showCheckboxes} = this.state
         return (
             <div >
 
-                <Bar onClick={()=>this.props.history.push('/mainmenuadmin')}/>
+                {/*<Bar onClick={()=>this.props.history.push('/mainmenuadmin')}/>*/}
+
+                <AppBar
+                    title="List of Students"
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/mainmenuadmin')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Log Out"
+                        primary={true}
+                        onClick={this.sendRequest_2}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
+                    />}
+                    style={{backgroundColor: "#986d51"}}
+                />
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>

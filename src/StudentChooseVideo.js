@@ -3,7 +3,7 @@ import axios from './AxiosConfiguration'
 import IconButton from 'material-ui/IconButton';
 import BackIcon from "material-ui/svg-icons/hardware/keyboard-arrow-left"
 import Forvid from 'material-ui/svg-icons/notification/ondemand-video';
-import MoneyIcon from 'material-ui/svg-icons/editor/monetization-on';
+import MoneyIcon from 'material-ui/svg-icons/action/done-all';
 
 
 
@@ -35,7 +35,7 @@ function Bar({onClick}) {
                 <IconButton onClick={onClick}>
                     <BackIcon/>
                 </IconButton>}
-            style={{backgroundColor: "#D50000"}}
+            style={{backgroundColor: "#986d51"}}
         />
     );
 }
@@ -178,9 +178,8 @@ class StudentChooseVideo extends React.Component {
                             for (var j = 0; j < this.state.dataLength_2; j++) {
                                 if (this.state.data[i].topic == this.state.data_2[j].video){
                                     console.log("yess")
-                                    this.state.data[i].watch = "watch laew"
+                                    this.state.data[i].watch = "Watched"
                                     // this.state.data[i].outof = this.state.data_2[j].outof
-
                                 }
                                 // else {
                                 //     console.log("nooo")
@@ -190,6 +189,7 @@ class StudentChooseVideo extends React.Component {
                             }
                         }
                         console.log(this.state.data)
+                        this.setState({finaldata: this.state.data})
                     })
                     .catch((error) => {
                         console.log(error)
@@ -228,7 +228,7 @@ class StudentChooseVideo extends React.Component {
             })
     }
 
-    globalStateHandler = (data,data2) => {
+    globalStateHandler = (data,data2,data3) => {
         // perhaps some processing...
         axios.post(`/user/make_jwt?username=${this.state.iam}&video=${data}`)
             .then((response) => {
@@ -255,6 +255,8 @@ class StudentChooseVideo extends React.Component {
             globalState: data,
         })
         localStorage.setItem('ChooseWatch', data);
+        localStorage.setItem('HeaderHls', data2);
+        localStorage.setItem('Description', data3);
         // demo();
         console.log("be 4 tiimeout");
         setTimeout(this.go, 200);
@@ -266,7 +268,19 @@ class StudentChooseVideo extends React.Component {
 
     go =() =>{
         this.props.history.push('/hls_page');
-    }
+    };
+
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
 
 
     render(){
@@ -275,7 +289,40 @@ class StudentChooseVideo extends React.Component {
             <div >
 
 
-                <Bar onClick={()=>this.props.history.push('/mainstudent')}/>
+                {/*<Bar onClick={()=>this.props.history.push('/mainstudent')}/>*/}
+
+                <AppBar
+                    title="Video Lists Available"
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/mainstudent')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Log Out"
+                        primary={true}
+                        onClick={this.sendRequest_2}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
+                    />}
+                    style={{backgroundColor: "#986d51"}}
+                />
+
+                {/*<AppBar*/}
+                    {/*title="Video Lists Available"*/}
+                    {/*showMenuIconButton={false}*/}
+                    {/*style={{backgroundColor: "#986d51"}}*/}
+                    {/*iconElementLeft={*/}
+                        {/*<IconButton onClick={()=>this.props.history.push('/mainmenustudent')}>*/}
+                            {/*<BackIcon/>*/}
+                        {/*</IconButton>}*/}
+                    {/*iconElementRight={<RaisedButton*/}
+                        {/*label="Log Out"*/}
+                        {/*primary={true}*/}
+                        {/*onClick={this.sendRequest}*/}
+                        {/*buttonStyle={{backgroundColor:"#e99833"}}*/}
+                        {/*style={{marginTop:"5px"}}*/}
+                    {/*/>}*/}
+                {/*/>*/}
 
                 <Table style ={{top: "100px"}}>
                     <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>
@@ -283,7 +330,7 @@ class StudentChooseVideo extends React.Component {
                         <TableRow>
                             <TableHeaderColumn>Topic</TableHeaderColumn>
                             <TableHeaderColumn>Description</TableHeaderColumn>
-                            <TableHeaderColumn>Icon</TableHeaderColumn>
+                            <TableHeaderColumn>Remark</TableHeaderColumn>
                             <TableHeaderColumn>Action</TableHeaderColumn>
                             {/*<TableHeaderColumn>Status</TableHeaderColumn>*/}
                         </TableRow>
@@ -307,17 +354,23 @@ class StudentChooseVideo extends React.Component {
                                         {/*<MenuItem  primaryText="Done" onClick={() => this.updateItemStatus(each.key.id, "Done")}/>*/}
                                     {/*</TableRowColumn>*/}
                                     {/*<TableRowColumn>{each.id}</TableRowColumn>*/}
-                                    <TableRowColumn> <Forvid
-                                        color={"green"}
-                                        // viewBox={'0 0 24 24'}
-                                    />
+                                    {/*<TableRowColumn>{each.watch}</TableRowColumn>*/}
+
+
+                                    <TableRowColumn >
+                                        <IconButton disabled={!("Watched" === each.watch)}>
+                                            <MoneyIcon
+                                                color={"green"}
+                                                viewBox={'0 0 24 24'}
+                                            />
+                                        </IconButton>
                                     </TableRowColumn>
 
                                     <TableRowColumn>
                                         {/* {<DropDownMenuOpenImmediateExample />} */}
                                         {/*<a href={each.url+"?jwt=sadasd"}>  Watch This</a>*/}
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.url)} />*/}
-                                        <LoginButton onClick={() => this.globalStateHandler(each.url, each.topic)}/>
+                                        <LoginButton onClick={() => this.globalStateHandler(each.url, each.topic, each.description)}/>
 
                                         {/*<MenuItem  primaryText="Watch this" bugs={this.state.globalState} onClick={() => this.globalStateHandler(each.filepath)}*/}
                                         {/*/>*/}

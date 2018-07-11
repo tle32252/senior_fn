@@ -69,13 +69,13 @@ const styles = {
     //   color: orange500,
     // },
     underlineStyle: {
-        borderColor: "#E53935",
+        borderColor: "#673630",
     },
     floatingLabelStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
     floatingLabelFocusStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
 };
 
@@ -223,6 +223,18 @@ class AdminManageVideo extends Component {
         // window.location.reload();
     };
 
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
     handleChange = (event, index, value) => this.setState({value});
 
     render() {
@@ -239,13 +251,13 @@ class AdminManageVideo extends Component {
         const actions = [
             <FlatButton
                 label="Cancel"
-                backgroundColor="#F44336"
+                backgroundColor="#C98134"
                 onClick={this.handleClose}
                 style={{float:"left"}}
             />,
             <FlatButton
-                label="Save"
-                backgroundColor="#8BC34A"
+                label="Upload"
+                backgroundColor="#DABD97"
                 disabled={this.state.disable}
                 onClick={()=> this.sendRequest()}
             />,
@@ -267,10 +279,11 @@ class AdminManageVideo extends Component {
                     iconElementRight={<RaisedButton
                         label="Log Out"
                         primary={true}
-                        onClick={this.sendRequest}
+                        onClick={this.sendRequest_2}
                         buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
                     />}
-                    style={{backgroundColor: "#D50000"}}
+                    style={{backgroundColor: "#986d51"}}
                 />
                 {/*<AppBar*/}
 
@@ -313,7 +326,7 @@ class AdminManageVideo extends Component {
                     modal={true}
                     open={this.state.open}
                     actions={actions}
-                    titleStyle={{backgroundColor:"#D50000", color:"white"}}
+                    titleStyle={{backgroundColor:"#986d51", color:"white"}}
                     contentStyle={{ width: '30%',}}
                     autoScrollBodyContent={true}
                 >

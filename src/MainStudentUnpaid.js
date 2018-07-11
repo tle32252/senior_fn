@@ -254,6 +254,7 @@ class MainStudentUnpaid extends Component {
                         primary={true}
                         onClick={this.sendRequest}
                         buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"6px"}}
                     />}
                 />
                 <div class="center">

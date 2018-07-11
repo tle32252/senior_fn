@@ -7,6 +7,8 @@ import Dialog from 'material-ui/Dialog';
 
 // import React from 'react';
 // import RaisedButton from 'material-ui/RaisedButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 
 import {
@@ -200,7 +202,7 @@ class StudentChooseExercise extends React.Component {
                 console.log(response)
                 this.setState({score: response.data})
                 console.log(this.state.score)
-                axios.post(`/upload_done?username=${this.state.iam}&exercise=${this.state.eiei_2}&score=${this.state.score}&outof=${this.state.fullscore}`)
+                axios.post(`/upload_done?username=${this.state.iam}&exerciseid=${this.state.eiei_2}&exercise=${this.state.eiei}&score=${this.state.score}&outof=${this.state.fullscore}`)
                 console.log(this.state.iam)
                 console.log(this.state.eiei)
                 console.log(this.state.score)
@@ -256,38 +258,42 @@ class StudentChooseExercise extends React.Component {
                         {data.map((each) => {
 
                             return(
-                                <div>
-                                    <h3 >{each.question} </h3>
+                                <Card className="recipe-menu">
+                                    <br/>
+                                    <CardText style={{wordWrap: "break-word"}}>
+                                        {each.question}
+                                    </CardText>
+                                    {/*<h3 style={{wordWrap: "break-word"}}>{each.question} </h3>*/}
                                     <RadioButtonGroup
                                         name="shipSpeed"
-                                        // style={{marginLeft:"40px"}}
                                     >
                                         <RadioButton
                                             value="light"
                                             label={each.choiceA}
                                             onClick={() => this.handleAddAns(each.id, "Choice A")}
-                                            style={{marginLeft:"40px"}}
+                                            style={{marginLeft:"40px", wordWrap: "break-word", display: "flex", width: "95%"}}
                                         />
                                         <RadioButton
                                             value="not_light"
                                             label={each.choiceB}
                                             onClick={() => this.handleAddAns(each.id, "Choice B")}
-                                            style={{marginLeft:"40px"}}
+                                            style={{marginLeft:"40px", wordWrap: "break-word", display: "flex", width: "95%"}}
                                         />
                                         <RadioButton
                                             value="ludicrous"
                                             label={each.choiceC}
                                             onClick={() => this.handleAddAns(each.id, "Choice C")}
-                                            style={{marginLeft:"40px"}}
+                                            style={{marginLeft:"40px", wordWrap: "break-word", display: "flex", width: "95%"}}
                                         />
                                         <RadioButton
                                             value="ludicroussss"
                                             label={each.choiceD}
                                             onClick={() => this.handleAddAns(each.id, "Choice D")}
-                                            style={{marginLeft:"40px"}}
+                                            style={{marginLeft:"40px", wordWrap: "break-word", display: "flex", width: "95%"}}
                                         />
                                     </RadioButtonGroup>
-                                </div>
+                                    <br/>
+                                </Card>
                             )
 
                         })
@@ -298,13 +304,23 @@ class StudentChooseExercise extends React.Component {
 
 
                 {/*<h3 >Anchor Origin</h3>*/}
-                <div>
-                    <div>
 
-                        <RaisedButton label="Submit" secondary={true}  onClick={this.click}  style={{marginTop:"40px", marginButtom:"40px"}} />
-                    </div>
+                <Card>
 
-                </div>
+                    <CardActions>
+                        <RaisedButton
+                            fullWidth={true}
+                            label="Submit"
+                            secondary={true}
+                            onClick={this.click}
+                            style={{marginTop:"40px", marginButtom:"40px"}}
+                        />
+                    </CardActions>
+
+                </Card>
+
+
+
 
                 <Dialog
                     title={`You have scored ${this.state.score}/${this.state.fullscore}.`}

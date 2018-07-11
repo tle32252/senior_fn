@@ -94,13 +94,13 @@ const styles = {
     //   color: orange500,
     // },
     underlineStyle: {
-        borderColor: "#E53935",
+        borderColor: "#673630",
     },
     floatingLabelStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
     floatingLabelFocusStyle: {
-        color: "#E53935",
+        color: "#673630",
     },
 };
 
@@ -516,13 +516,13 @@ class EditExercise extends React.Component {
         const actions_2 = [
             <FlatButton
                 label="Cancel"
-                backgroundColor="#F44336"
+                backgroundColor="#C98134"
                 onClick={()=> this.handleClose_2()}
                 style={{float:"left"}}
             />,
             <FlatButton
                 label="Save"
-                backgroundColor="#8BC34A"
+                backgroundColor="#DABD97"
                 disabled={this.state.disable}
                 onClick={()=> this.updateExercise()}
             />,
@@ -531,13 +531,13 @@ class EditExercise extends React.Component {
         const actions_3 = [
             <FlatButton
                 label="Cancel"
-                backgroundColor="#F44336"
+                backgroundColor="#C98134"
                 onClick={()=> this.handleClose_3()}
                 style={{float:"left"}}
             />,
             <FlatButton
                 label="Save"
-                backgroundColor="#8BC34A"
+                backgroundColor="#DABD97"
                 disabled={this.state.disable}
                 onClick={()=> this.makeExercise_1()}
             />,
@@ -578,8 +578,9 @@ class EditExercise extends React.Component {
                         icon={<Foradd />}
                         onClick={this.handleOpen_3}
                         buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
                     />}
-                    style={{backgroundColor: "#D50000"}}
+                    style={{backgroundColor: "#986d51"}}
                 />
 
                 <Table style ={{top: "100px"}}>
@@ -649,7 +650,7 @@ class EditExercise extends React.Component {
                     modal={true}
                     open={this.state.open_2}
                     actions={actions_2}
-                    titleStyle={{backgroundColor:"#D50000", color:"white"}}
+                    titleStyle={{backgroundColor:"#986d51", color:"white"}}
                     contentStyle={{ width: '30%',}}
                     autoScrollBodyContent={true}
                 >
@@ -735,7 +736,7 @@ class EditExercise extends React.Component {
                     modal={true}
                     open={this.state.open_3}
                     actions={actions_3}
-                    titleStyle={{backgroundColor:"#D50000", color:"white"}}
+                    titleStyle={{backgroundColor:"#986d51", color:"white"}}
                     contentStyle={{ width: '30%',}}
                     autoScrollBodyContent={true}
                 >
