@@ -507,7 +507,7 @@ class EditExercise extends React.Component {
             />,
             <FlatButton
                 label="Submit"
-                primary={true}
+                secondary={true}
                 // keyboardFocused={true}
                 onClick={this.handleSubmit}
             />,

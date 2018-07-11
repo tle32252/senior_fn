@@ -387,7 +387,7 @@ class AdminListOfExercise extends React.Component {
                         primary={true}
                         icon={<Foradd />}
                         onClick={this.handleOpen_2}
-                        buttonStyle={{backgroundColor:"#f1bf58"}}
+                        buttonStyle={{backgroundColor:"#e99833"}}
                         style={{marginTop:"5px"}}
                     />}
                     style={{backgroundColor: "#986d51"}}

@@ -195,6 +195,18 @@ class StudentChooseExercise extends React.Component {
         });
     };
 
+    sendRequest_2 = () => {
+        axios.post("/logout")
+            .then((response) => {
+                console.log("log out")
+                console.log(response)
+                this.props.history.push('/')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
+
     click = () =>{
         this.setState({open: true});
         axios.post(`/check_score`, this.state.ans2)
@@ -240,7 +252,23 @@ class StudentChooseExercise extends React.Component {
         return (
             <div >
 
-                <Bar onClick={()=>this.props.history.push('/student_choose_exercise')}/>
+                {/*<Bar onClick={()=>this.props.history.push('/student_choose_exercise')}/>*/}
+
+                <AppBar
+                    title="Choose the Correct Answer and Submit Below"
+                    iconElementLeft={
+                        <IconButton onClick={()=>this.props.history.push('/student_choose_exercise')}>
+                            <BackIcon/>
+                        </IconButton>}
+                    iconElementRight={<RaisedButton
+                        label="Log Out"
+                        primary={true}
+                        onClick={this.sendRequest_2}
+                        buttonStyle={{backgroundColor:"#e99833"}}
+                        style={{marginTop:"5px"}}
+                    />}
+                    style={{backgroundColor: "#986d51"}}
+                />
 
                 {/*<Table style ={{top: "100px"}}>*/}
                     {/*<TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes}>*/}

@@ -259,7 +259,7 @@ class StudentChooseVideo extends React.Component {
         localStorage.setItem('Description', data3);
         // demo();
         console.log("be 4 tiimeout");
-        setTimeout(this.go, 200);
+        setTimeout(this.go, 500);
         console.log("after timeout");
 
         // this.props.history.push('/hls_page');

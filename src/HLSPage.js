@@ -45,7 +45,7 @@ function Bar({onClick,eiei}) {
                 <IconButton onClick={onClick}>
                     <BackIcon/>
                 </IconButton>}
-            style={{backgroundColor: "#D50000"}}
+            style={{backgroundColor: "#986d51"}}
         />
     );
 }
