@@ -248,7 +248,7 @@ class MainStudentUnpaid extends Component {
                 <AppBar
                     title="Welcome, Student"
                     showMenuIconButton={false}
-                    style={{backgroundColor: "#D50000"}}
+                    style={{backgroundColor: "#986d51"}}
                     iconElementRight={<RaisedButton
                         label="Log Out"
                         primary={true}

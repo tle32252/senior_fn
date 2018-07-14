@@ -556,7 +556,7 @@ class EditExercise extends React.Component {
         const actions_4 = [
             <FlatButton
                 label="Close"
-                primary={true}
+                secondary={true}
                 onClick={this.handleClose_4}
             />,
 
@@ -565,7 +565,7 @@ class EditExercise extends React.Component {
         const actions_5 = [
             <FlatButton
                 label="Close"
-                primary={true}
+                secondary={true}
                 onClick={this.handleClose_5}
             />,
 

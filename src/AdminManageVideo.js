@@ -423,7 +423,7 @@ class AdminManageVideo extends Component {
                     {/*</DropDownMenu>*/}
                 </Dialog>
                 <Dialog
-                    title="Successfully Added"
+                    title="Successfully Uploaded"
                     actions={actions_3}
                     modal={false}
                     open={this.state.open_3}
